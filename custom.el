@@ -9,7 +9,7 @@
      "2c7dc80264de0ba9409d4ebb3c7b31cf8e4982015066174c786f16a672db71b2"
      "1576495a064188b7b3017d16763288a6e9583a01f02773144b246ef56e64ec76"
      default))
- '(package-selected-packages '(auctex base16-theme ef-themes)))
+ '(package-selected-packages '(auctex base16-theme counsel doom-modeline ef-themes ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
