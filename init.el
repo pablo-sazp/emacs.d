@@ -25,7 +25,7 @@
 
 (defun set-emacs-theme-light ()
   (interactive)
-  (load-theme 'solarized-light t)
+  (load-theme 'ef-arbutus t)
   (set-emacs-frames "light"))
 
 (defun set-emacs-theme-dark ()
@@ -67,3 +67,10 @@
 
 ;;Usage
 (delete-selection-mode 1)
+
+
+;;AucTEX
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)    ;Ask for master document
+(latex-preview-pane-enable)
