@@ -10,11 +10,12 @@
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
-;;Package management Install packages if not installed
+;;Package management
 (require 'use-package)
 (setq use-package-always-ensure t)
 
 ;;Theme
+(use-package base16-theme)
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
     (let* ((window-id (frame-parameter frame 'outer-window-id))
@@ -42,7 +43,7 @@
 
 ;; Ivy
 (use-package ivy
-  :config
+  :init
   (ivy-mode 1))
 
 ;; Marginalia - annotations in the minibuffer
@@ -50,13 +51,25 @@
   :config
   (marginalia-mode))
 
-;; Autocomplete
+;; Autocomplete + coding stuff
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
+(use-package which-key
+  :init
+  (which-key-mode)
+  :config
+  (setq which-key-idle-delay 0.8))
+
+
+(use-package jinx
+  :init (jinx-mode))
+
 ;; Swiper
-(use-package swiper)
-(global-set-key (kbd "M-s") 'swiper)
+(use-package swiper
+  :after ivy
+  :bind (("M-s" . swiper)))
+
 
 ;;Doom modeline
 (use-package nerd-icons)
@@ -72,8 +85,17 @@
 (setq inhibit-startup-message t)
 (desktop-save-mode 1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
-(display-line-numbers-mode 1)
 (scroll-bar-mode -1)
+
+(global-display-line-numbers-mode 1) 
+(dolist (mode '(org-mode-hook
+		     term-mode-hook
+		     eshell-mode-hook
+		     shell-mode-hooj
+		     help-mode-hook
+		     doc-view-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0)))) ; disable line numbers for modes in term-mode				
+
 
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms
@@ -99,8 +121,8 @@
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
 (setq-default TeX-engine 'pdftex)
 
-(use-package latex-preview-pane)
-(latex-preview-pane-enable)
+(use-package latex-preview-pane
+  :init (latex-preview-pane-enable)
+  :bind (:map LaTeX-mode-map
+	      ("M-p" . latex-preview-pane-mode)))
 
-
-(use-package jinx)

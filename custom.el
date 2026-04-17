@@ -13,8 +13,8 @@
      default))
  '(package-selected-packages
    '(auctex base16-theme company company-mode doom-modeline doom-themes
-	    ef-themes ivy jinx latex-preview-pane marginalia pdf-tools
-	    swiper vertico)))
+	    ef-themes ivy jinx latex-preview-pane latex-preview-pane:
+	    marginalia pdf-tools rainbow-delimiters swiper vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
