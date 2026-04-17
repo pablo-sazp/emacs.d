@@ -43,8 +43,15 @@
 
 ;; Ivy
 (use-package ivy
-  :init
+  :demand t
+  :config
   (ivy-mode 1))
+
+
+;; Swiper
+(use-package swiper
+  :after ivy
+  :bind (("M-s" . swiper)))
 
 ;; Marginalia - annotations in the minibuffer
 (use-package marginalia
@@ -64,12 +71,6 @@
 
 (use-package jinx
   :init (jinx-mode))
-
-;; Swiper
-(use-package swiper
-  :after ivy
-  :bind (("M-s" . swiper)))
-
 
 ;;Doom modeline
 (use-package nerd-icons)
@@ -91,7 +92,7 @@
 (dolist (mode '(org-mode-hook
 		     term-mode-hook
 		     eshell-mode-hook
-		     shell-mode-hooj
+		     shell-mode-hook
 		     help-mode-hook
 		     doc-view-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0)))) ; disable line numbers for modes in term-mode				
@@ -113,16 +114,19 @@
 (global-set-key (kbd "M-s-<down>")  'windmove-down)
 
 ;;AucTEX
-(use-package auctex)
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
+(use-package auctex
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq TeX-electric-math '("$" . "$")))
+
 (setq-default TeX-master nil)
-      
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
 (setq-default TeX-engine 'pdftex)
 
 (use-package latex-preview-pane
-  :init (latex-preview-pane-enable)
+  :after auctex
+  :config (latex-preview-pane-enable)
   :bind (:map LaTeX-mode-map
 	      ("M-p" . latex-preview-pane-mode)))
 
