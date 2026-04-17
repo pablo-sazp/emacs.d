@@ -4,4 +4,5 @@ auto-save/
 *~
 elpa/
 eshell/
-tramp/
+tramp
+.emacs.*

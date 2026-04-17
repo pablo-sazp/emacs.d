@@ -30,7 +30,8 @@
 
 (defun set-emacs-theme-dark ()
   (interactive)
-  (load-theme 'ef-bio t)
+  (load-theme 'base16-material-darker t)
+  (load-file "~/.emacs.d/themes/material-darker-custom.el")
   (set-emacs-frames "dark"))
 
 (if (window-system)
@@ -39,10 +40,23 @@
 ;;CUA mode
 (cua-mode t)
 
-;;Ivy
+;; Ivy
 (use-package ivy
   :config
   (ivy-mode 1))
+
+;; Marginalia - annotations in the minibuffer
+(use-package marginalia
+  :config
+  (marginalia-mode))
+
+;; Autocomplete
+(use-package company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; Swiper
+(use-package swiper)
+(global-set-key (kbd "M-s") 'swiper)
 
 ;;Doom modeline
 (use-package nerd-icons)
@@ -54,10 +68,12 @@
   (doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
   )
 
-;;Other
+;;Visual and other stuff
 (setq inhibit-startup-message t)
 (desktop-save-mode 1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
+(display-line-numbers-mode 1)
+(scroll-bar-mode -1)
 
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms
@@ -67,10 +83,24 @@
 
 ;;Usage
 (delete-selection-mode 1)
-
+(setq switch-to-buffer-obey-display-actions nil)
+				
+(global-set-key (kbd "M-s-<left>")  'windmove-left) ; Window selection
+(global-set-key (kbd "M-s-<right>") 'windmove-right)
+(global-set-key (kbd "M-s-<up>")    'windmove-up)
+(global-set-key (kbd "M-s-<down>")  'windmove-down)
 
 ;;AucTEX
+(use-package auctex)
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-(setq-default TeX-master nil)    ;Ask for master document
+(setq-default TeX-master nil)
+      
+(setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
+(setq-default TeX-engine 'pdftex)
+
+(use-package latex-preview-pane)
 (latex-preview-pane-enable)
+
+
+(use-package jinx)
