@@ -87,14 +87,17 @@
 (desktop-save-mode 1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
 (scroll-bar-mode -1)
+(setq ring-bell-function 'ignore)
 
-(global-display-line-numbers-mode 1) 
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers 'relative)
+
 (dolist (mode '(org-mode-hook
-		     term-mode-hook
-		     eshell-mode-hook
-		     shell-mode-hook
-		     help-mode-hook
-		     doc-view-mode-hook))
+		term-mode-hook
+		eshell-mode-hook
+		shell-mode-hook
+		help-mode-hook
+		doc-view-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0)))) ; disable line numbers for modes in term-mode				
 
 

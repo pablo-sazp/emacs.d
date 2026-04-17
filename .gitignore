@@ -1,7 +1,8 @@
 eln-cache/
 auto-save-list/
 auto-save/
-*~
+*~*
+*#*
 elpa/
 eshell/
 tramp
