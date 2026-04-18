@@ -41,17 +41,17 @@
 ;;CUA mode
 (cua-mode t)
 
-;; Ivy
-(use-package ivy
-  :demand t
-  :config
-  (ivy-mode 1))
+;;Ivy
+ (use-package ivy
+   :demand t
+   :init
+   (ivy-mode 1)
+   )
 
 
 ;; Swiper
 (use-package swiper
-  :after ivy
-  :bind (("M-s" . swiper)))
+  :bind (("C-s" . swiper)))
 
 ;; Marginalia - annotations in the minibuffer
 (use-package marginalia
@@ -68,9 +68,9 @@
   :config
   (setq which-key-idle-delay 0.8))
 
-
 (use-package jinx
-  :init (jinx-mode))
+  :hook
+  (LaTeX-mode . jinx-mode))		;Activate jinx mode only in latex
 
 ;;Doom modeline
 (use-package nerd-icons)
@@ -110,6 +110,8 @@
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
 
 ;;Usage
+(setq enable-recursive-minibuffers t)
+
 (delete-selection-mode 1)
 (setq switch-to-buffer-obey-display-actions nil)
 				
@@ -134,10 +136,16 @@
 
 ;;AucTEX
 (use-package auctex
+  :hook
+  (LaTeX-mode . turn-on-reftex)	;Activate reftex
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
-  (setq TeX-electric-math '("$" . "$")))
+  (setq TeX-electric-math '("$" . "$"))
+  (setq reftex-cite-format		; Reftex custom cite comands
+	'((?\C-m . "\\parencite{%l}")
+          (?t    . "\\textcite{%l}")))
+  )
 
 (setq-default TeX-master nil)
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
