@@ -89,8 +89,10 @@
 (scroll-bar-mode -1)
 (setq ring-bell-function 'ignore)
 
+(setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
-(setq display-line-numbers 'relative)
+
+
 
 (dolist (mode '(org-mode-hook
 		term-mode-hook

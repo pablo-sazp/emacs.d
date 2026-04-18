@@ -5,6 +5,7 @@ auto-save/
 *#*
 elpa/
 eshell/
+transient/
 tramp
 .emacs.*
 *.log
