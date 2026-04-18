@@ -118,6 +118,20 @@
 (global-set-key (kbd "M-s-<up>")    'windmove-up)
 (global-set-key (kbd "M-s-<down>")  'windmove-down)
 
+(setq mark-ring-max '4); Mark ring
+(setq global-mark-ring-max '3)
+
+
+(use-package expand-region  ; Expand regions
+  :ensure t
+  :bind
+  (("M-h" . er/expand-region)
+   ("M-H" . er/contract-region)))
+
+(use-package ace-window					; Switch windows
+  :bind
+  (("C-o" . ace-window)))
+
 ;;AucTEX
 (use-package auctex
   :config
