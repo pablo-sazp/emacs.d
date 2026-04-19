@@ -46,12 +46,15 @@
    :demand t
    :init
    (ivy-mode 1)
+   :config
+   (counsel-mode 1)
    )
-
 
 ;; Swiper
 (use-package swiper
-  :bind (("C-s" . swiper)))
+  :bind (("C-s" . swiper-isearch)
+	 ("C-M-s" . swiper-all))
+  )
 
 ;; Marginalia - annotations in the minibuffer
 (use-package marginalia
@@ -127,8 +130,8 @@
 (use-package expand-region  ; Expand regions
   :ensure t
   :bind
-  (("M-h" . er/expand-region)
-   ("M-H" . er/contract-region)))
+  (("M-s" . er/expand-region)
+   ("M-S" . er/contract-region)))
 
 (use-package ace-window					; Switch windows
   :bind
