@@ -12,10 +12,9 @@
      "1576495a064188b7b3017d16763288a6e9583a01f02773144b246ef56e64ec76"
      default))
  '(package-selected-packages
-   '(ace-window auctex base16-theme company company-mode doom-modeline
-		doom-themes ef-themes expand-region ivy jinx
-		latex-preview-pane latex-preview-pane: marginalia
-		pdf-tools rainbow-delimiters swiper vertico)))
+   '(ace-window auctex base16-theme company counsel doom-modeline
+		expand-region jinx latex-preview-pane marginalia
+		swiper)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

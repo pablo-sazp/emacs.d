@@ -6,9 +6,10 @@
 ;;Packages
 (require 'package)
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ))
 
 ;;Package management
 (require 'use-package)
@@ -73,7 +74,10 @@
 
 (use-package jinx
   :hook
-  (LaTeX-mode . jinx-mode))		;Activate jinx mode only in latex
+  (LaTeX-mode . jinx-mode)		;Activate jinx mode only in latex
+  (text-mode-hook . jinx-mode)
+  :config
+  (global-jinx-mode -1))		;Disabled by default
 
 ;;Doom modeline
 (use-package nerd-icons)
@@ -126,6 +130,7 @@
 (setq mark-ring-max '4); Mark ring
 (setq global-mark-ring-max '3)
 
+(setq sentence-end-double-space nil)	;Jump to points with M-e
 
 (use-package expand-region  ; Expand regions
   :ensure t
@@ -137,26 +142,8 @@
   :bind
   (("C-o" . ace-window)))
 
-;;AucTEX
-(use-package auctex
-  :hook
-  (LaTeX-mode . turn-on-reftex)	;Activate reftex
-  :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq TeX-electric-math '("$" . "$"))
-  (setq reftex-cite-format		; Reftex custom cite comands
-	'((?\C-m . "\\parencite{%l}")
-          (?t    . "\\textcite{%l}")))
-  )
 
-(setq-default TeX-master nil)
-(setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
-(setq-default TeX-engine 'pdftex)
+;; Load programing packages + custom settings
+(add-to-list 'load-path "~/.emacs.d/coding/")
 
-(use-package latex-preview-pane
-  :after auctex
-  :config (latex-preview-pane-enable)
-  :bind (:map LaTeX-mode-map
-	      ("M-p" . latex-preview-pane-mode)))
-
+(require 'auctex-custom)
