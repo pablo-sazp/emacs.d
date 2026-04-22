@@ -5,7 +5,9 @@
 (use-package auctex
   :hook
   ((LaTeX-mode . turn-on-reftex)	;Activate reftex
-   (LaTeX-mode . (lambda () (company-mode -1)))) ;Disable suggestions
+   (LaTeX-mode . (lambda () (company-mode -1))) ;Disable suggestions
+   (LaTeX-mode . (lambda () (setq sentence-end-double-space nil)))	;Jump to points with M-e
+   )
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)

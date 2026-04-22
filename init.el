@@ -130,8 +130,6 @@
 (setq mark-ring-max '4); Mark ring
 (setq global-mark-ring-max '3)
 
-(setq sentence-end-double-space nil)	;Jump to points with M-e
-
 (use-package expand-region  ; Expand regions
   :ensure t
   :bind
