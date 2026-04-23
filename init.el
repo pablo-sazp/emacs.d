@@ -140,6 +140,8 @@
   :bind
   (("C-o" . ace-window)))
 
+(global-set-key (kbd "M-l")  'up-list)
+(global-set-key (kbd "M-L")  'down-list)
 
 ;; Load programing packages + custom settings
 (add-to-list 'load-path "~/.emacs.d/coding/")

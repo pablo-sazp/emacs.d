@@ -12,11 +12,13 @@
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq TeX-electric-math '("$" . "$"))
-  (setq reftex-cite-format		; Reftex custom cite comands
-	'((?\C-m . "\\parencite{%l}")
-          (?t    . "\\textcite{%l}")))
-  (setq TeX-save-query nil))		;Do not ask for saving - always save
-
+  (setq TeX-electric-sub-and-superscript t) ;Auto brackets in math mode
+  ;; (setq reftex-cite-format		; Reftex custom cite comands
+  ;; 	'((?\C-m . "\\parencite{%l}")
+  ;;         (?t    . "\\textcite{%l}")))
+  (setq TeX-save-query nil)		;Do not ask for saving - always save
+  )
+  
 (setq-default TeX-master nil)
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -synctex=1 -shell-escape %S%(PDFout)")))
 ;; (setq-default TeX-engine 'pdftex)
