@@ -30,3 +30,21 @@
   ;; 	      ("M-p" . latex-preview-pane-mode))
   )
 
+
+;; Custom functions
+(defun my/text-parreference-TeX (reftype)
+  "Inserts a reference of the type (REFTYPE #ref)"
+  (interactive "sInsert text: ")
+  (insert (format "\\textbf{(%s " reftype))
+  (reftex-reference)
+  (insert ")}"))
+
+(defun my/text-reference-TeX (reftype)
+  "Inserts a reference of the type (REFTYPE #ref)"
+  (interactive "sInsert text: ")
+  (insert (format "\\textbf{%s " reftype))
+  (reftex-reference)
+  (insert "}"))
+
+(define-key LaTeX-mode-map (kbd "C-c r") 'my/text-parreference-TeX)
+(define-key LaTeX-mode-map (kbd "C-c M-r") 'my/text-reference-TeX)
