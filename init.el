@@ -47,8 +47,8 @@
    :demand t
    :init
    (ivy-mode 1)
-   :config
-   (counsel-mode 1)
+   ;; :config
+   ;; (counsel-mode 1)
    )
 
 ;; Swiper

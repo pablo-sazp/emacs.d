@@ -48,5 +48,8 @@
   (reftex-reference)
   (insert "}"))
 
-(define-key LaTeX-mode-map (kbd "C-c r") 'my/text-parreference-TeX)
-(define-key LaTeX-mode-map (kbd "C-c M-r") 'my/text-reference-TeX)
+(add-hook 'LaTeX-mode-hook
+	  (lambda () 
+	    (define-key LaTeX-mode-map (kbd "C-c r") 'my/text-parreference-TeX)
+	    (define-key LaTeX-mode-map (kbd "C-c M-r") 'my/text-reference-TeX))
+	  )
