@@ -16,6 +16,9 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 112)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 120 :weight 'regular)
+
 (use-package base16-theme)
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
@@ -89,7 +92,7 @@
   (doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
   )
 
-;;Visual and other stuff
+;;Visual + editor settings
 (setq inhibit-startup-message t)
 (desktop-save-mode 1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
@@ -99,7 +102,12 @@
 (setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
 
-
+(setf (cdr (assq 'continuation fringe-indicator-alist)) ;Remove newline symbols
+      ;; '(nil nil) ;; no continuation indicators
+      '(nil right-curly-arrow) ;; right indicator only
+      ;; '(left-curly-arrow nil) ;; left indicator only
+      ;; '(left-curly-arrow right-curly-arrow) ;; default
+      )
 
 (dolist (mode '(org-mode-hook
 		term-mode-hook
