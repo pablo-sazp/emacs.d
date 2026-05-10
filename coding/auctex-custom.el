@@ -7,7 +7,7 @@
   ((LaTeX-mode . turn-on-reftex)	;Activate reftex
    (LaTeX-mode . (lambda ()
 		   (company-mode -1) ;Disable suggestions
-		   (setq sentence-end-double-space nil)	;Jump to points with M-e
+		   (setq-local sentence-end-double-space nil)	;Jump to points with M-e
 		   (variable-pitch-mode)
 		   (visual-line-mode))))
   :config

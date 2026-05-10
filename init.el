@@ -54,6 +54,8 @@
    ;; (counsel-mode 1)
    )
 
+(use-package wgrep)			;Allows editing ivy-occur
+
 ;; Swiper
 (use-package swiper
   :bind (("C-s" . swiper-isearch)
@@ -155,3 +157,4 @@
 (add-to-list 'load-path "~/.emacs.d/coding/")
 
 (require 'auctex-custom)
+(require 'orgmode-custom)
