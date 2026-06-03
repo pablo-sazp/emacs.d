@@ -2,6 +2,10 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 					
+;;; Enable the Emacs server, allows editing via emacsclient
+;; (require 'server)
+;; (when (not (server-running-p)) (server-start))
+
 
 ;;Packages
 (require 'package)
@@ -16,8 +20,8 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 112)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 120 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height 112)
+(set-face-attribute 'variable-pitch nil :font "Noto Sans" :height 120 :weight 'regular)
 
 (use-package base16-theme)
 (defun set-emacs-frames (variant)
@@ -99,10 +103,14 @@
 (desktop-save-mode 1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
 (scroll-bar-mode -1)
+(menu-bar-mode -1)
 (setq ring-bell-function 'ignore)
 
 (setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)
+
+(setq mouse-wheel-progressive-speed nil) ;Mouse speed settings
+(setq mouse-wheel-scroll-amount '(2))
 
 (setf (cdr (assq 'continuation fringe-indicator-alist)) ;Remove newline symbols
       ;; '(nil nil) ;; no continuation indicators
@@ -138,7 +146,7 @@
 (global-set-key (kbd "M-s-<down>")  'windmove-down)
 
 (setq mark-ring-max '4); Mark ring
-(setq global-mark-ring-max '3)
+(setq global-mark-ring-max '4)
 
 (use-package expand-region  ; Expand regions
   :ensure t
@@ -154,7 +162,8 @@
 (global-set-key (kbd "M-L")  'down-list)
 
 ;; Load programing packages + custom settings
-(add-to-list 'load-path "~/.emacs.d/coding/")
+(add-to-list 'load-path "~/.emacs.d/package-settings/")
 
 (require 'auctex-custom)
 (require 'orgmode-custom)
+(require 'orgroam-custom)

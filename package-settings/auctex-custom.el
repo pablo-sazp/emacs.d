@@ -9,7 +9,8 @@
 		   (company-mode -1) ;Disable suggestions
 		   (setq-local sentence-end-double-space nil)	;Jump to points with M-e
 		   (variable-pitch-mode)
-		   (visual-line-mode))))
+		   (visual-line-mode)
+		   (setq-local line-spacing 0.05))))
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
