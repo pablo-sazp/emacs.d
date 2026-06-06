@@ -14,29 +14,17 @@
      "2c7dc80264de0ba9409d4ebb3c7b31cf8e4982015066174c786f16a672db71b2"
      "1576495a064188b7b3017d16763288a6e9583a01f02773144b246ef56e64ec76"
      default))
- '(display-line-numbers-type 'relative)
- '(global-display-line-numbers-mode t)
- '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
+ '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org") t)
  '(package-selected-packages
-   '(ace-window auctex base16-theme company counsel doom-modeline
-		expand-region jinx latex-preview-pane marginalia
-		org-bullets org-roam swiper visual-fill-column wgrep))
+   '(ace-window auctex base16-theme company
+		doom-modeline expand-region jinx latex-preview-pane
+		marginalia nerd-icons-completion nerd-icons-dired
+		orderless org-bullets org-roam visual-fill-column
+		wgrep))
  '(tool-bar-mode nil))
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fixed-pitch ((t (:family "Fira Code Retina" :height 125))))
- '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic))))
- '(org-document-title ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans" :height 1.5 :underline nil))))
- '(org-level-1 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans" :height 1.25))))
- '(org-level-2 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans" :height 1.1))))
- '(org-level-3 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans" :height 1.05))))
- '(org-level-4 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans"))))
- '(org-level-5 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans"))))
- '(org-level-6 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans"))))
- '(org-level-7 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans"))))
- '(org-level-8 ((t (:inherit default :weight semi-bold :foreground "#eeffff" :font "DejaVu Sans"))))
- '(variable-pitch ((t (:family "DejaVu Sans" :height 125)))))
+ '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic)))))

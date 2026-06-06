@@ -73,13 +73,13 @@
 
 ;; Centered org mode
 
-;; (defun efs/org-mode-visual-fill ()
-;;   (setq visual-fill-column-width 100
-;;         visual-fill-column-center-text t)
-;;   (visual-fill-column-mode 1))
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
-;; (use-package visual-fill-column
-;;   :hook (org-mode . efs/org-mode-visual-fill))
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
 
 ;; --------------- ORG-AGENDA -------------
 (setq org-agenda-files '("~/Vault/02-Agenda/agenda.org"))

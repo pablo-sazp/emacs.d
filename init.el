@@ -20,8 +20,8 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height 112)
-(set-face-attribute 'variable-pitch nil :font "Noto Sans" :height 120 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font "Firacode Retina" :height 114)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 126 :weight 'regular)
 
 (use-package base16-theme)
 (defun set-emacs-frames (variant)
@@ -49,27 +49,65 @@
 ;;CUA mode
 (cua-mode t)
 
-;;Ivy
- (use-package ivy
-   :demand t
-   :init
-   (ivy-mode 1)
-   ;; :config
-   ;; (counsel-mode 1)
-   )
+;; ------------------------------------ Minibuffer --------------------------------------
 
-(use-package wgrep)			;Allows editing ivy-occur
+;; Vertico + Consult
+(use-package vertico
+  ;;:custom
+  ;; (vertico-scroll-margin 0) ;; Different scroll margin
+  ;; (vertico-count 20) ;; Show more candidates
+  ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
+  ;; (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  :init
+  (vertico-mode))
 
-;; Swiper
-(use-package swiper
-  :bind (("C-s" . swiper-isearch)
-	 ("C-M-s" . swiper-all))
-  )
+(use-package consult
+  :config
+  (global-set-key (kbd "C-s") #'consult-line)
+  (global-set-key (kbd "C-M-s") #'isearch-forward)
+  (global-set-key (kbd "C-x b") #'consult-buffer))
+
+(use-package savehist			;Save history between sessions
+  :init
+  (savehist-mode))
+
+(use-package orderless			;Fancy autocompletion for vertico
+  :custom
+  ;; Configure a custom style dispatcher (see the Consult wiki)
+  ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
+  ;; (orderless-component-separator #'orderless-escapable-split-on-space)
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil) ;; Disable defaults, use our settings
+  (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
+
+
+;;(use-package wgrep)			;Allows editing ivy-occur
 
 ;; Marginalia - annotations in the minibuffer
 (use-package marginalia
   :config
   (marginalia-mode))
+
+;; Dired stuff
+(use-package nerd-icons
+  :demand t)
+
+(use-package nerd-icons-dired
+  :after nerd-icons
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+(dolist (fn '(dired-hide-details-mode))
+  (add-hook 'dired-mode-hook fn))
+
+(use-package nerd-icons-completion
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+;;--------------------------------------------------------------------------------------
 
 ;; Autocomplete + coding stuff
 (use-package company)
@@ -89,7 +127,6 @@
   (global-jinx-mode -1))		;Disabled by default
 
 ;;Doom modeline
-(use-package nerd-icons)
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
@@ -106,8 +143,14 @@
 (menu-bar-mode -1)
 (setq ring-bell-function 'ignore)
 
+;;Line numbers + others
 (setq-default display-line-numbers-type 'relative)
-(global-display-line-numbers-mode 1)
+(global-display-line-numbers-mode -1)
+(dolist (hook '(emacs-lisp-mode-hook
+		LaTeX-mode-hook))
+  (add-hook hook #'display-line-numbers-mode)) ; enable line numbers only in these modes	
+
+;;(hline-mode 1)
 
 (setq mouse-wheel-progressive-speed nil) ;Mouse speed settings
 (setq mouse-wheel-scroll-amount '(2))
@@ -118,15 +161,6 @@
       ;; '(left-curly-arrow nil) ;; left indicator only
       ;; '(left-curly-arrow right-curly-arrow) ;; default
       )
-
-(dolist (mode '(org-mode-hook
-		term-mode-hook
-		eshell-mode-hook
-		shell-mode-hook
-		help-mode-hook
-		doc-view-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0)))) ; disable line numbers for modes in term-mode				
-
 
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms
@@ -145,8 +179,8 @@
 (global-set-key (kbd "M-s-<up>")    'windmove-up)
 (global-set-key (kbd "M-s-<down>")  'windmove-down)
 
-(setq mark-ring-max '4); Mark ring
-(setq global-mark-ring-max '4)
+(setq mark-ring-max '5); Mark ring
+(setq global-mark-ring-max '5)
 
 (use-package expand-region  ; Expand regions
   :ensure t
