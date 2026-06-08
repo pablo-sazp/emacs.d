@@ -113,6 +113,8 @@
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
+(use-package magit)
+
 (use-package which-key
   :init
   (which-key-mode)
@@ -185,8 +187,8 @@
 (use-package expand-region  ; Expand regions
   :ensure t
   :bind
-  (("M-s" . er/expand-region)
-   ("M-S" . er/contract-region)))
+  (("M-h" . er/expand-region)
+   ("M-H" . er/contract-region)))
 
 (use-package ace-window					; Switch windows
   :bind
