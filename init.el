@@ -48,24 +48,38 @@
 
 ;;CUA mode
 (cua-mode t)
+(global-set-key (kbd "C-S-z") #'undo)
 
 ;; ------------------------------------ Minibuffer --------------------------------------
 
 ;; Vertico + Consult
 (use-package vertico
-  ;;:custom
+  :custom
   ;; (vertico-scroll-margin 0) ;; Different scroll margin
   ;; (vertico-count 20) ;; Show more candidates
   ;; (vertico-resize t) ;; Grow and shrink the Vertico minibuffer
-  ;; (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
+  (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
   (vertico-mode))
 
 (use-package consult
-  :config
-  (global-set-key (kbd "C-s") #'consult-line)
-  (global-set-key (kbd "C-M-s") #'isearch-forward)
-  (global-set-key (kbd "C-x b") #'consult-buffer))
+  :bind
+  ("C-s" . consult-line)
+  ("C-M-s" . isearch-forward)
+  ("M-g i" . consult-imenu)
+  ("C-x b" . consult-buffer))
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)
+   ("M-." . embark-dwim)
+   ("C-c m" . embark-select)
+   ("C-c e" . embark-export))
+  )
+
+(use-package embark-consult)
+
+(use-package wgrep)
 
 (use-package savehist			;Save history between sessions
   :init
@@ -81,8 +95,6 @@
   (completion-category-defaults nil) ;; Disable defaults, use our settings
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
-
-;;(use-package wgrep)			;Allows editing ivy-occur
 
 ;; Marginalia - annotations in the minibuffer
 (use-package marginalia
@@ -114,6 +126,7 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 (use-package magit)
+(use-package git-timemachine)
 
 (use-package which-key
   :init
@@ -188,11 +201,11 @@
   :ensure t
   :bind
   (("M-h" . er/expand-region)
-   ("M-H" . er/contract-region)))
+   ("M-H" . mark-paragraph)))
 
 (use-package ace-window					; Switch windows
   :bind
-  (("C-o" . ace-window)))
+  (("C-x o" . ace-window)))
 
 (global-set-key (kbd "M-l")  'up-list)
 (global-set-key (kbd "M-L")  'down-list)

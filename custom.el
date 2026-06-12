@@ -16,8 +16,9 @@
      default))
  '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org") t)
  '(package-selected-packages
-   '(ace-window auctex base16-theme company doom-modeline expand-region
-		jinx latex-preview-pane magit marginalia
+   '(ace-window auctex base16-theme company doom-modeline embark
+		embark-consult expand-region git-timemachine jinx
+		latex-preview-pane magit marginalia
 		nerd-icons-completion nerd-icons-dired orderless
 		org-bullets org-roam transient visual-fill-column
 		vundo wgrep))
