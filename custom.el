@@ -17,15 +17,17 @@
  '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org") t)
  '(package-selected-packages
    '(ace-window auctex base16-theme company doom-modeline embark
-		embark-consult expand-region git-timemachine jinx
-		latex-preview-pane magit marginalia
-		nerd-icons-completion nerd-icons-dired orderless
-		org-bullets org-roam transient visual-fill-column
-		vundo wgrep))
+		embark-consult ess ess-r-mode expand-region
+		git-timemachine jinx latex-preview-pane lsp-mode magit
+		marginalia nerd-icons-completion nerd-icons-dired
+		orderless org-bullets org-roam transient
+		visual-fill-column vterm vundo wgrep))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic)))))
+ '(fixed-pitch ((t (:family "JetBrains Mono" :height 125))))
+ '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic))))
+ '(variable-pitch ((t (:family "Noto Sans" :height 125)))))

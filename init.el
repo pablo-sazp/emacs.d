@@ -120,14 +120,26 @@
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;;--------------------------------------------------------------------------------------
-
 ;; Autocomplete + coding stuff
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (ess-mode . lsp)
+	 (python-mode . lsp))
+         ;; if you want which-key integration
+         ;;(lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
 (use-package magit)
 (use-package git-timemachine)
 
+;; -------------------------------------------------------------------------------------
 (use-package which-key
   :init
   (which-key-mode)
@@ -216,3 +228,4 @@
 (require 'auctex-custom)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
+(require 'ess-custom)
