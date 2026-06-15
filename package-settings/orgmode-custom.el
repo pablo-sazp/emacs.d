@@ -8,8 +8,7 @@
   (org-indent-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1)
-  (setq-local line-spacing 2)
-  (display-line-numbers-mode))
+  (setq-local line-spacing 2))
 
 ;;(require 'color)
 ;; (let* ((variable-tuple
