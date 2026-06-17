@@ -50,6 +50,8 @@
 (cua-mode t)
 (global-set-key (kbd "C-S-z") #'undo)
 
+(require 'ess-r-mode)			; This is a hack, does not work otherwise
+
 ;; ------------------------------------ Minibuffer --------------------------------------
 
 ;; Vertico + Consult
@@ -122,17 +124,6 @@
 ;;--------------------------------------------------------------------------------------
 ;; Autocomplete + coding stuff
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (ess-mode . lsp)
-	 (python-mode . lsp))
-         ;; if you want which-key integration
-         ;;(lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -160,6 +151,7 @@
   :custom (doom-modeline-major-mode-icon t)
   (doom-modeline-vcs-icon t)
   (doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
+  (setq doom-modeline-env-version t)
   )
 
 ;;Visual + editor settings
@@ -225,7 +217,8 @@
 ;; Load programing packages + custom settings
 (add-to-list 'load-path "~/.emacs.d/package-settings/")
 
+(require 'ess-custom)
 (require 'auctex-custom)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
-(require 'ess-custom)
+(require 'python-custom)
