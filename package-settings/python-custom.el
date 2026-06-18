@@ -1,6 +1,3 @@
-(provide 'python-custom)
-
-
 ;; Language server
 
 (use-package eglot
@@ -27,7 +24,7 @@
 (add-to-list 'display-buffer-alist
              '("^\\*Python"
                (display-buffer-reuse-window display-buffer-at-bottom)
-               (window-height . 0.35) 
+               (window-height . 0.33) 
                (reusable-frames . nil)))
 
 (add-to-list 'display-buffer-alist
@@ -37,3 +34,5 @@
                (slot . 1)
                (window-width . 0.33)
                (reusable-frames . nil)))
+
+(provide 'python-custom)

@@ -1,5 +1,4 @@
 ;; Here go all auctex + latex writing settings
-(provide 'auctex-custom)
 
 ;;AucTEX
 (use-package auctex
@@ -56,3 +55,5 @@
 	    (define-key LaTeX-mode-map (kbd "C-c r") 'my/text-parreference-TeX)
 	    (define-key LaTeX-mode-map (kbd "C-c M-r") 'my/text-reference-TeX))
 	  )
+
+(provide 'auctex-custom)

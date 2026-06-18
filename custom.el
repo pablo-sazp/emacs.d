@@ -20,7 +20,8 @@
 		embark-consult expand-region git-timemachine jinx
 		latex-preview-pane magit marginalia
 		nerd-icons-completion nerd-icons-dired orderless
-		org-bullets org-roam vertico visual-fill-column wgrep))
+		org-bullets org-roam vertico visual-fill-column vundo
+		wgrep))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

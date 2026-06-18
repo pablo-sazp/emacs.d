@@ -1,5 +1,3 @@
-(provide 'orgmode-custom)
-
 ;;(global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
@@ -83,3 +81,5 @@
 ;; --------------- ORG-AGENDA -------------
 (setq org-agenda-files '("~/Vault/02-Agenda/agenda.org"))
 (setq org-agenda-span 20)
+
+(provide 'orgmode-custom)

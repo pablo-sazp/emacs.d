@@ -1,5 +1,3 @@
-(provide 'orgroam-custom)
-
 (use-package org-roam
   :ensure t
   :custom
@@ -9,3 +7,6 @@
 	 ("C-c n i" . org-roam-node-insert))
   :config
   (org-roam-setup))
+
+
+(provide 'orgroam-custom)

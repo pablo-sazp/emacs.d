@@ -50,7 +50,7 @@
 (cua-mode t)
 (global-set-key (kbd "C-S-z") #'undo)
 
-(require 'ess-r-mode)			; This is a hack, does not work otherwise
+(require 'ess-site)			; This needs to be near the top, does not work otherwise
 
 ;; ------------------------------------ Minibuffer --------------------------------------
 
@@ -124,11 +124,36 @@
 ;;--------------------------------------------------------------------------------------
 ;; Autocomplete + coding stuff
 
-(use-package company)
-(add-hook 'after-init-hook 'global-company-mode)
+(use-package company
+  :defer t
+  :diminish ""
+  :hook ((prog-mode) . (lambda () (company-mode)))
+  :config
+  (setq tab-always-indent 'complete)
+  (setq company-idle-delay 1)
+  (setq company-minimum-prefix-length 3)
+  :bind (:map company-mode-map
+	 ("<tab>" . 'company-indent-or-complete-common)
+	 :map company-active-map
+	 ("RET" . nil)
+	 ("<tab>" . company-complete)
+	 ("C-n" . 'company-select-next-or-abort)
+	 ("C-j" . 'company-select-next-or-abort)
+	 ("C-p" . 'company-select-previous-or-abort)
+	 ("C-k" . 'company-select-previous-or-abort)))
+
 
 (use-package magit)
 (use-package git-timemachine)
+
+;;Line numbers + others
+(setq-default display-line-numbers-type 'relative)
+(global-display-line-numbers-mode -1)
+(dolist (hook '(emacs-lisp-mode-hook
+		LaTeX-mode-hook))
+  (add-hook hook #'display-line-numbers-mode)) ; enable line numbers only in these modes
+
+(add-hook 'prog-mode-hook 'electric-pair-mode)
 
 ;; -------------------------------------------------------------------------------------
 (use-package which-key
@@ -162,14 +187,7 @@
 (menu-bar-mode -1)
 (setq ring-bell-function 'ignore)
 
-;;Line numbers + others
-(setq-default display-line-numbers-type 'relative)
-(global-display-line-numbers-mode -1)
-(dolist (hook '(emacs-lisp-mode-hook
-		LaTeX-mode-hook))
-  (add-hook hook #'display-line-numbers-mode)) ; enable line numbers only in these modes	
-
-;;(hline-mode 1)
+(defvar display-buffer-alist nil)	; Initializes the variable so that I can add to it later
 
 (setq mouse-wheel-progressive-speed nil) ;Mouse speed settings
 (setq mouse-wheel-scroll-amount '(2))
