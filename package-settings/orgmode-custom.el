@@ -79,7 +79,7 @@
   :hook (org-mode . efs/org-mode-visual-fill))
 
 ;; --------------- ORG-AGENDA -------------
-(setq org-agenda-files '("~/Vault/02-Agenda/agenda.org"))
+(setq org-agenda-files '("~/Vault/02-Agenda/"))
 (setq org-agenda-span 20)
 
 (provide 'orgmode-custom)

@@ -14,11 +14,11 @@
      "2c7dc80264de0ba9409d4ebb3c7b31cf8e4982015066174c786f16a672db71b2"
      "1576495a064188b7b3017d16763288a6e9583a01f02773144b246ef56e64ec76"
      default))
- '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org") t)
+ '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
  '(package-selected-packages
    '(ace-window auctex base16-theme company conda doom-modeline
-		embark-consult expand-region git-timemachine jinx
-		latex-preview-pane magit marginalia
+		embark-consult expand-region git-timemachine gptel
+		jinx latex-preview-pane magit marginalia
 		nerd-icons-completion nerd-icons-dired orderless
 		org-bullets org-roam vertico visual-fill-column vundo
 		wgrep))

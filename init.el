@@ -155,6 +155,17 @@
 
 (add-hook 'prog-mode-hook 'electric-pair-mode)
 
+
+;; LLM integration
+
+(use-package gptel
+  :config
+  (setq
+   gptel-model 'gemini-flash-lite-latest
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key "AQ.Ab8RN6I1h9erWnYczH1LIoTbfMCEa29mVuqJHosEgbHQAfUSYQ"
+                   :stream t)))
+
 ;; -------------------------------------------------------------------------------------
 (use-package which-key
   :init
@@ -177,7 +188,16 @@
   (doom-modeline-vcs-icon t)
   (doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
   (setq doom-modeline-env-version t)
-  )
+  :config
+  ;; Conda environment on modeline
+  (doom-modeline-def-segment conda-env	
+    (when (and (boundp 'conda-env-current-name) conda-env-current-name)
+      (propertize (format "  %s " conda-env-current-name) 
+                  'face 'font-lock-keyword-face)))
+  ;; This defines the order on the right side of the modeline
+  (doom-modeline-def-modeline 'main
+    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info minor-modes input-method buffer-encoding major-mode process conda-env vcs)))
 
 ;;Visual + editor settings
 (setq inhibit-startup-message t)
