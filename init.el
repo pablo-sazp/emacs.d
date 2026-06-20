@@ -155,16 +155,34 @@
 
 (add-hook 'prog-mode-hook 'electric-pair-mode)
 
+;; Terminal
+
+(use-package vterm
+  :config
+  (add-to-list 'display-buffer-alist
+	     `("*vterm*"
+	       (display-buffer-reuse-window display-buffer-at-bottom)
+	       (window-height . 0.3)
+	       (reusable-frames . nil)))
+  )
 
 ;; LLM integration
 
 (use-package gptel
+  :bind
+  ("C-x l" . gptel-send)
   :config
   (setq
    gptel-model 'gemini-flash-lite-latest
    gptel-backend (gptel-make-gemini "Gemini"
                    :key "AQ.Ab8RN6I1h9erWnYczH1LIoTbfMCEa29mVuqJHosEgbHQAfUSYQ"
                    :stream t)))
+
+
+(use-package markdown-mode		; Pretty markdown mode
+  :after gptel
+  :hook
+  (gptel-mode-hook . variable-pitch-mode))
 
 ;; -------------------------------------------------------------------------------------
 (use-package which-key
@@ -219,6 +237,15 @@
       ;; '(left-curly-arrow right-curly-arrow) ;; default
       )
 
+;; (use-package golden-ratio
+;;   :config
+;;   (golden-ratio-mode 1)
+;;   (add-to-list 'golden-ratio-exclude-modes "vterm-mode")
+;;   (add-to-list 'golden-ratio-exclude-modes "*python-mode*")
+;;   (add-to-list 'golden-ratio-exclude-modes "*inferior-python-mode*")
+;;   (add-to-list 'golden-ratio-exclude-modes "*ess-r-mode*")
+;;   (add-to-list 'golden-ratio-exclude-modes "*inferior-ess-r-mode*"))
+
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
@@ -230,11 +257,6 @@
 
 (delete-selection-mode 1)
 (setq switch-to-buffer-obey-display-actions nil)
-				
-(global-set-key (kbd "M-s-<left>")  'windmove-left) ; Window selection
-(global-set-key (kbd "M-s-<right>") 'windmove-right)
-(global-set-key (kbd "M-s-<up>")    'windmove-up)
-(global-set-key (kbd "M-s-<down>")  'windmove-down)
 
 (setq mark-ring-max '5); Mark ring
 (setq global-mark-ring-max '5)
@@ -245,18 +267,44 @@
   (("M-h" . er/expand-region)
    ("M-H" . mark-paragraph)))
 
+(global-set-key (kbd "M-l")  'up-list)
+(global-set-key (kbd "M-S-l") '(down-list -1))
+
+
+;; Buffer navigation
 (use-package ace-window					; Switch windows
   :bind
-  (("C-x o" . ace-window)))
+  (("C-x C-o" . ace-window)))
 
-(global-set-key (kbd "M-l")  'up-list)
-(global-set-key (kbd "M-L")  'down-list)
+(use-package buffer-move
+  :bind
+  (("C-<left>" . buf-move-left)
+   ("C-<right>" . buf-move-right)
+   ("C-<up>" . buf-move-up)
+   ("C-<down>" . buf-move-down)))
 
 ;; Load programing packages + custom settings
 (add-to-list 'load-path "~/.emacs.d/package-settings/")
 
-(require 'ess-custom)
 (require 'auctex-custom)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
 (require 'python-custom)
+
+;; General ess settings
+(with-eval-after-load 'ess-site
+  (require 'ess-custom)
+  )
+
+(add-to-list 'display-buffer-alist
+	     `("^\\*R\\(?::.*\\)?\\*$"
+	       (display-buffer-reuse-window display-buffer-at-bottom)
+	       (window-height . 0.3)
+	       (reusable-frames . nil)))
+
+;; Custom functions
+;;(add-to-list 'load-path "~/.emacs.d/functions/")
+(use-package toggle-terminal
+  :load-path "~/.emacs.d/functions/"
+  :bind
+  ("<f12>" . myfun/toggle-layout))
