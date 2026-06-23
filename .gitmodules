@@ -1,0 +1,3 @@
+[submodule "ess-plot"]
+	path = git-packages/ess-plot
+	url = https://github.com/DennieTeMolder/ess-plot.git

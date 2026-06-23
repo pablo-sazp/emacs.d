@@ -104,6 +104,8 @@
   (marginalia-mode))
 
 ;; Dired stuff
+(setq delete-by-moving-to-trash t)	; Send to trash when deleting with dired
+
 (use-package nerd-icons
   :demand t)
 
@@ -164,7 +166,8 @@
 	       (display-buffer-reuse-window display-buffer-at-bottom)
 	       (window-height . 0.3)
 	       (reusable-frames . nil)))
-  )
+  :bind (:map vterm-mode-map
+	      ("C-S-v" . vterm-yank)))
 
 ;; LLM integration
 
@@ -308,3 +311,10 @@
   :load-path "~/.emacs.d/functions/"
   :bind
   ("<f12>" . myfun/toggle-layout))
+
+
+;; Packages installed from git
+(use-package ess-plot
+  :load-path "~/.emacs.d/git-packages/ess-plot/"
+  ;:hook (ess-r-post-run . ess-plot-on-startup-h)
+  )

@@ -27,12 +27,12 @@
 
 
 ;; Other related packages
-(use-package latex-preview-pane
-  :after auctex
-  :config (latex-preview-pane-enable)
-  ;; :bind (:map LaTeX-mode-map
-  ;; 	      ("M-p" . latex-preview-pane-mode))
-  )
+;; (use-package latex-preview-pane
+;;   :after auctex
+;;   :config (latex-preview-pane-enable)
+;;   ;; :bind (:map LaTeX-mode-map
+;;   ;; 	      ("M-p" . latex-preview-pane-mode))
+;;   )
 
 
 ;; Custom functions

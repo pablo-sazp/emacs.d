@@ -60,6 +60,10 @@
   (setq org-ellipsis " ▾")
   ;;(efs/org-font-setup)
   (setq org-hide-emphasis-markers t)
+  ;; (require 'org-tempo)			; Allows expanding snippets to code blocks
+  (setq org-support-shift-select t)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-startup-with-inline-images t)
   )
 
 (use-package org-bullets
@@ -78,8 +82,27 @@
 (use-package visual-fill-column
   :hook (org-mode . efs/org-mode-visual-fill))
 
+
 ;; --------------- ORG-AGENDA -------------
+
 (setq org-agenda-files '("~/Vault/02-Agenda/"))
 (setq org-agenda-span 20)
 
 (provide 'orgmode-custom)
+
+
+;; --------------- ORG-BABEL -------------
+
+(with-eval-after-load 'org
+  ;; Languages
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((R . t)))
+  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)) ; Redisplay images when executing code
+
+;; R settings
+
+(with-eval-after-load 'org
+  (dolist (el '(("r" . "src R :session :results output")
+		("rf" . "src R :session :results graphics file :file \"org-images/a.png\"")))
+    (add-to-list 'org-structure-template-alist el)))
