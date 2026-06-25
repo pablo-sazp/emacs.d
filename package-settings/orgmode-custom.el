@@ -8,53 +8,25 @@
   (visual-line-mode 1)
   (setq-local line-spacing 2))
 
-;;(require 'color)
-;; (let* ((variable-tuple
-;;         (cond ((x-list-fonts "Noto Sans")         '(:font "Noto Sans"))
-;; 	      ((x-list-fonts "DejaVu Sans")         '(:font "DejaVu Sans"))
-;;                 ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-;;                 ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-;;                 ((x-list-fonts "Verdana")         '(:font "Verdana"))
-;;                 ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-;;                 (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-;;          ;; (base-font-color     (face-foreground 'default nil 'default))
-;;          ;; (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-
-;;   ;; Theme-derived colors
-;;        (base-font-color (face-foreground 'default nil 'default))
-;;        (blue            (face-foreground 'font-lock-keyword-face))
-;;        (cyan            (face-foreground 'font-lock-builtin-face))
-;;        (green           (face-foreground 'font-lock-string-face))
-
-;;   ;; subtle lower-level color
-;;        (subtle-color
-;;         (color-lighten-name base-font-color -15))
-
-;;    ;; generic headline template
-;;        (headline
-;;         `(:inherit default
-;;                    :weight semi-bold
-;;                    :foreground ,base-font-color)))
-
-;;     (custom-theme-set-faces
-;;      'user
-;;      `(org-level-8 ((t (,@headline ,@variable-tuple))))
-;;      `(org-level-7 ((t (,@headline ,@variable-tuple))))
-;;      `(org-level-6 ((t (,@headline ,@variable-tuple))))
-;;      `(org-level-5 ((t (,@headline ,@variable-tuple))))
-;;      `(org-level-4 ((t (,@headline ,@variable-tuple))))
-;;      `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.05))))
-;;      `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.1))))
-;;      `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.25))))
-;;      `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil))))))
+(defun custom/org-mode-custom-fonts () ; Fancy text display customization
+  (let* ((base-font-color     (face-foreground 'default nil 'default)) ; Fancy text display for headings
+	 (headline           `(:inherit variable-pitch :weight bold)))
+    (custom-theme-set-faces
+     'user
+     `(org-level-3 ((t (,@headline :height 1))))
+     `(org-level-2 ((t (,@headline :height 1.05))))
+     `(org-level-1 ((t (,@headline :height 1.1))))
+     `(org-document-title ((t (,@headline  :height 1.25 :underline nil))))))
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch) ;Small settings for tables, blocks, etc.
+  (set-face-attribute 'org-block nil :inherit 'default))
 
 (use-package org
   :hook
   ((org-mode . efs/org-mode-setup)
   (org-mode . (lambda () (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Noto Sans" :height 125))))
-   '(fixed-pitch ((t ( :family "JetBrains Mono" :height 125)))))))
+   '(fixed-pitch ((t ( :family "Hack" :height 124))))
+   '(variable-pitch ((t (:family "DejaVu Sans" :height 124)))))))
   )
   :config
   (setq org-ellipsis " ▾")
@@ -64,6 +36,7 @@
   (setq org-support-shift-select t)
   (setq org-confirm-babel-evaluate nil)
   (setq org-startup-with-inline-images t)
+  (custom/org-mode-custom-fonts)  
   )
 
 (use-package org-bullets
@@ -91,6 +64,12 @@
 (provide 'orgmode-custom)
 
 
+;; Clocking time
+
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+
 ;; --------------- ORG-BABEL -------------
 
 (with-eval-after-load 'org
@@ -100,9 +79,12 @@
      '((R . t)))
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)) ; Redisplay images when executing code
 
-;; R settings
+
+;; Code block settings
 
 (with-eval-after-load 'org
   (dolist (el '(("r" . "src R :session :results output")
-		("rf" . "src R :session :results graphics file :file \"org-images/a.png\"")))
+		("rf" . "src R :session :results graphics file :file \"org-images/a.png\"")
+		("p" . "src python :session")
+		("pf" . "src python :session :results graphics file :file \"org-images/a.png\"")))
     (add-to-list 'org-structure-template-alist el)))

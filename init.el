@@ -20,8 +20,8 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
-(set-face-attribute 'fixed-pitch nil :font "Firacode Retina" :height 114)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 126 :weight 'regular)
+(set-face-attribute 'default nil :font "Hack" :height 114)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 125 :weight 'regular)
 
 (use-package base16-theme)
 (defun set-emacs-frames (variant)
@@ -39,8 +39,8 @@
 
 (defun set-emacs-theme-dark ()
   (interactive)
-  (load-theme 'base16-material-darker t)
-  (load-file "~/.emacs.d/themes/material-darker-custom.el")
+  (load-theme 'doom-material-dark t)
+  ;;(load-file "~/.emacs.d/themes/material-darker-custom.el")
   (set-emacs-frames "dark"))
 
 (if (window-system)

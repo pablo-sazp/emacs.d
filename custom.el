@@ -6,7 +6,8 @@
  ;; If there is more than one, they won't work right.
  '(cua-mode t)
  '(custom-safe-themes
-   '("99768190047342cd4a93fa9b60a9998130cdbffcb76d0f63b092c9853ac580f1"
+   '("fffef514346b2a43900e1c7ea2bc7d84cbdd4aa66c1b51946aade4b8d343b55a"
+     "99768190047342cd4a93fa9b60a9998130cdbffcb76d0f63b092c9853ac580f1"
      "75863c7d5dca60cfb927b5de5c8f39b2a9d7756c5f346990e4423aba33cb3a9d"
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      "578002ec7093cedeb7d279794492b19ad7413cca3e16286e776168eb544798c4"
@@ -14,7 +15,7 @@
      "2c7dc80264de0ba9409d4ebb3c7b31cf8e4982015066174c786f16a672db71b2"
      "1576495a064188b7b3017d16763288a6e9583a01f02773144b246ef56e64ec76"
      default))
- '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org") t)
+ '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
  '(package-selected-packages
    '(ace-window auctex base16-theme buffer-move company conda dired
 		doom-modeline embark-consult ess expand-region
