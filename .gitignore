@@ -11,3 +11,4 @@ tramp
 *.log
 .org-id*
 org-roam.db
+org-clock-save.el

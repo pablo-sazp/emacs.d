@@ -20,6 +20,8 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
+(add-to-list 'default-frame-alist
+             '(font . "Hack-11"))
 (set-face-attribute 'default nil :font "Hack" :height 114)
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 125 :weight 'regular)
 
@@ -107,7 +109,10 @@
 (setq delete-by-moving-to-trash t)	; Send to trash when deleting with dired
 
 (use-package nerd-icons
-  :demand t)
+  :demand t
+  :custom
+  (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 
 (use-package nerd-icons-dired
   :after nerd-icons
@@ -173,7 +178,7 @@
 
 (use-package gptel
   :bind
-  ("C-x l" . gptel-send)
+  ("C-x l" . gptel-menu)
   :config
   (setq
    gptel-model 'gemini-flash-lite-latest
@@ -213,12 +218,14 @@
   ;; Conda environment on modeline
   (doom-modeline-def-segment conda-env	
     (when (and (boundp 'conda-env-current-name) conda-env-current-name)
-      (propertize (format "  %s " conda-env-current-name) 
-                  'face 'font-lock-keyword-face)))
+      (concat " " 
+	      (nerd-icons-devicon "nf-dev-anaconda" :face 'font-lock-escape-face :height 1.0) 
+	      (propertize (format " %s " conda-env-current-name)
+			  'face '(:inherit font-lock-escape-face :height 1.0)))))
   ;; This defines the order on the right side of the modeline
   (doom-modeline-def-modeline 'main
     '(bar matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info minor-modes input-method buffer-encoding major-mode process conda-env vcs)))
+    '(misc-info minor-modes input-method buffer-encoding conda-env major-mode process vcs)))
 
 ;;Visual + editor settings
 (setq inhibit-startup-message t)

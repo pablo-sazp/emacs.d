@@ -1,13 +1,14 @@
-;;; set-workspace.el --- Activate terminal and others depending on the current major mode
+;;; toggle-terminal.el --- Activate terminal or relevant REPL depending on the current major mode
+;;; ~70% of this was done with the help of an LLM
 
 (defvar myfun/layout-window-config nil)
 
 (defun myfun/layout-spec ()
   "Return a layout specification based on current major mode."
   (cond
-   ((derived-mode-p 'python-mode)
+   ((derived-mode-p 'python-mode 'inferior-python-mode)
     '((bottom "*Python*")))
-   ((derived-mode-p 'ess-r-mode)
+   ((derived-mode-p 'ess-r-mode 'inferior-ess-mode)
     '((bottom "*R"))) ;; Match *R*, *R:2*, *R:project*, etc.
    (t
     '((bottom "*vterm*")))))
@@ -76,31 +77,28 @@ falling back to default side-window layouts."
 
 ;;;###autoload
 (defun myfun/toggle-layout ()
-  "Toggle the IDE-like terminal/REPL windows at the bottom/right of the screen."
+  "Toggle terminal/REPL window at the bottom of the screen."
   (interactive)
   (let ((spec (myfun/layout-spec)))
     (if (myfun/layout-active-p spec)
-        ;; Hide layout: Restore previous window configuration if available
-        (if myfun/layout-window-config
-            (progn
-              (set-window-configuration myfun/layout-window-config)
-              (setq myfun/layout-window-config nil))
-          ;; Fallback: manually delete the layout windows
-          (dolist (item spec)
-            (let* ((buf (myfun/get-buffer (cadr item)))
-                   (win (and buf (get-buffer-window buf))))
-              (when win (delete-window win)))))
-      ;; Show layout: Save config and display buffers
+        ;; Hide layout: Restore config
+        (progn
+          (if myfun/layout-window-config
+              (progn
+                (set-window-configuration myfun/layout-window-config)
+                (setq myfun/layout-window-config nil))
+            (dolist (item spec)
+              (let* ((buf (myfun/get-buffer (cadr item)))
+                     (win (and buf (get-buffer-window buf))))
+                (when win (delete-window win))))))
+      ;; Show layout: Reset stale config, save current config, and display
       (setq myfun/layout-window-config (current-window-configuration))
       (let ((origin-win (selected-window)))
         (dolist (item spec)
           (let* ((dir (car item))
                  (buf-name (cadr item))
                  (buf (myfun/get-create-buffer buf-name)))
-            (myfun/display-buffer-at buf dir)))
-        ;;(select-window origin-win))))         ; Keeps focus in the original editing window, deactivated for now
-  ))))
-
+            (myfun/display-buffer-at buf dir)))))))
 
 
 (provide 'toggle-terminal)
