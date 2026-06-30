@@ -50,7 +50,7 @@
 
 ;;CUA mode
 (cua-mode t)
-(global-set-key (kbd "C-S-z") #'undo)
+(global-set-key (kbd "C-S-z") #'undo-redo)
 
 (require 'ess-site)			; This needs to be near the top, does not work otherwise
 
@@ -160,7 +160,14 @@
 		LaTeX-mode-hook))
   (add-hook hook #'display-line-numbers-mode)) ; enable line numbers only in these modes
 
-(add-hook 'prog-mode-hook 'electric-pair-mode)
+(use-package smartparens
+  :ensure smartparens  ;; install the package
+  ;;:hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config)
+  (smartparens-global-mode t))
+
 
 ;; Terminal
 
