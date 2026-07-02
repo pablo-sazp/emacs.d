@@ -137,7 +137,7 @@
   :hook ((prog-mode) . (lambda () (company-mode)))
   :config
   (setq tab-always-indent 'complete)
-  (setq company-idle-delay 1)
+  (setq company-idle-delay 0.0)
   (setq company-minimum-prefix-length 3)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
@@ -155,10 +155,10 @@
 
 ;;Line numbers + others
 (setq-default display-line-numbers-type 'relative)
-(global-display-line-numbers-mode -1)
-(dolist (hook '(emacs-lisp-mode-hook
+(global-display-line-numbers-mode -1)	; Line numbers disabled by default
+(dolist (hook '(prog-mode-hook
 		LaTeX-mode-hook))
-  (add-hook hook #'display-line-numbers-mode)) ; enable line numbers only in these modes
+  (add-hook hook (display-line-numbers-mode 1))) ; Enable line numbers only in these modes
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -168,6 +168,15 @@
   (require 'smartparens-config)
   (smartparens-global-mode t))
 
+;; Language server
+
+(use-package eglot
+  :ensure t
+  :hook ((python-mode . eglot-ensure)
+         (python-ts-mode . eglot-ensure))
+  :config
+  (add-to-list 'eglot-server-programs
+               '((python-mode python-ts-mode) . ("pylsp"))))
 
 ;; Terminal
 
@@ -209,7 +218,8 @@
 (use-package jinx
   :hook
   (LaTeX-mode . jinx-mode)		;Activate jinx mode only in latex
-  (text-mode-hook . jinx-mode)
+  (text-mode . jinx-mode)
+  (org-mode . jinx-mode)
   :config
   (global-jinx-mode -1))		;Disabled by default
 
@@ -254,14 +264,22 @@
       ;; '(left-curly-arrow right-curly-arrow) ;; default
       )
 
-;; (use-package golden-ratio
-;;   :config
-;;   (golden-ratio-mode 1)
-;;   (add-to-list 'golden-ratio-exclude-modes "vterm-mode")
-;;   (add-to-list 'golden-ratio-exclude-modes "*python-mode*")
-;;   (add-to-list 'golden-ratio-exclude-modes "*inferior-python-mode*")
-;;   (add-to-list 'golden-ratio-exclude-modes "*ess-r-mode*")
-;;   (add-to-list 'golden-ratio-exclude-modes "*inferior-ess-r-mode*"))
+
+;; Line numbers + others
+(setq-default display-line-numbers-type 'relative)
+(global-display-line-numbers-mode -1)	; Line numbers disabled by default
+(dolist (hook '(prog-mode-hook
+		LaTeX-mode-hook))
+  (add-hook hook (display-line-numbers-mode 1))) ; Enable line numbers only in these modes
+
+(use-package smartparens
+  :ensure smartparens  ;; install the package
+  ;;:hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config)
+  (smartparens-global-mode t))
+
 
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms

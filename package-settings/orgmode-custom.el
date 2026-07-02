@@ -101,5 +101,27 @@
     (add-to-list 'org-structure-template-alist el)))
 
 
+;; This allows eglot to activate in src buffers
+
+(with-eval-after-load 'eglot
+  (defun sloth/org-babel-edit-prep (info)
+    (setq buffer-file-name (or (alist-get :file (caddr info))
+                               "org-src-babel-tmp"))
+    (eglot-ensure))
+
+  (advice-add 'org-edit-src-code
+              :before (defun sloth/org-edit-src-code/before (&rest args)
+			(when-let* ((element (org-element-at-point))
+                                    (type (org-element-type element))
+                                    (lang (org-element-property :language element))
+                                    (mode (org-src-get-lang-mode lang))
+                                    ((eglot--lookup-mode mode))
+                                    (edit-pre (intern
+                                               (format "org-babel-edit-prep:%s" lang))))
+                          (if (fboundp edit-pre)
+                              (advice-add edit-pre :after #'sloth/org-babel-edit-prep)
+                            (fset edit-pre #'sloth/org-babel-edit-prep))))))
+
+
 ;; End of file
 (provide 'orgmode-custom)

@@ -1,14 +1,3 @@
-;; Language server
-
-(use-package eglot
-  :ensure t
-  :hook ((python-mode . eglot-ensure)
-         (python-ts-mode . eglot-ensure))
-  :config
-  (add-to-list 'eglot-server-programs
-               '((python-mode python-ts-mode) . ("pylsp"))))
-
-
 ;; Conda config
 
 (use-package conda
