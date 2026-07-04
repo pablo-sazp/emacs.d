@@ -152,7 +152,11 @@
 	 ("C-p" . 'company-select-previous-or-abort)
 	 ("C-k" . 'company-select-previous-or-abort)))
 
+(use-package company-box
+  :after company
+  :hook (company-mode . company-box-mode))
 
+;; Git integration
 (use-package magit)
 (use-package git-timemachine)
 
@@ -167,13 +171,24 @@
   
 ;; Language server
 
-(use-package eglot
-  :ensure t
-  :hook ((python-mode . eglot-ensure)
-         (python-ts-mode . eglot-ensure))
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook
+  ((python-mode . lsp-deferred)
+   (ess-r-mode . lsp-deferred))
+  :init
+  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
-  (add-to-list 'eglot-server-programs
-               '((python-mode python-ts-mode) . ("pylsp"))))
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
 
 ;; Terminal
 
