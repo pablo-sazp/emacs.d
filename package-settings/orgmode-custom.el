@@ -12,10 +12,10 @@
 	 (headline           `(:inherit variable-pitch :weight bold)))
     (custom-theme-set-faces
      'user
-     `(org-level-3 ((t (,@headline :height 1))))
-     `(org-level-2 ((t (,@headline :height 1.05))))
-     `(org-level-1 ((t (,@headline :height 1.1))))
-     `(org-document-title ((t (,@headline  :height 1.25 :underline nil))))))
+     `(org-level-3 ((t (,@headline :height 1.05))))
+     `(org-level-2 ((t (,@headline :height 1.1))))
+     `(org-level-1 ((t (,@headline :height 1.25))))
+     `(org-document-title ((t (,@headline  :height 1.3 :underline nil))))))
   ;;(set-face-attribute 'org-table nil :inherit 'fixed-pitch) ;Small settings for tables, blocks, etc.
   ;;(set-face-attribute 'org-block nil :inherit 'default :family "Hack")
   )
@@ -40,13 +40,11 @@
   (setq org-confirm-babel-evaluate nil)
   (setq org-startup-with-inline-images t)
   (custom/org-mode-custom-fonts)
-  (setq org-indent-mode nil)		; Disables automatic heading indenting
+  (setq org-indent-mode nil)	; Disables automatic heading indenting
+  (setq org-blank-before-new-entry ; Always insert blank line before headings
+      '((heading . t)	   
+        (plain-list-item . nil)))
   )
-
-;; (use-package org-bullets
-;;   :after org
-;;   :hook (org-mode . org-bullets-mode)
-;;   )
 
 
 (use-package org-modern
@@ -56,6 +54,17 @@
   :custom
   (org-modern-star 'replace)
   (org-modern-block-fringe nil))
+
+(use-package org-appear			; Show emphasis markers when hidden
+  :hook
+  (org-mode . org-appear-mode))
+
+(use-package org-fragtog
+  :hook
+  (org-mode . org-fragtog-mode))
+
+(with-eval-after-load 'org
+  (plist-put org-format-latex-options :scale 1.65)) ; Bigger latex preview
 
 ;; Centered org mode
 
@@ -78,6 +87,12 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
+;; Org templates
+(with-eval-after-load 'org
+  (setq org-capture-templates
+	'(("e" "Emacs config changes" entry
+	   (file "~/Vault/02-Agenda/emacs-todo.org")
+	   "* TODO %?"))))
 
 ;; --------------- ORG-BABEL -------------
 

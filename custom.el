@@ -18,13 +18,14 @@
      default))
  '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
  '(package-selected-packages
-   '(ace-window auctex base16-theme buffer-move casual company conda
-		dired doom-modeline embark-consult ess expand-region
-		git-timemachine golden-ratio gptel ht jinx lv magit
-		marginalia markdown-mode nerd-icons-completion
-		nerd-icons-dired orderless org-bullets org-modern
-		org-roam smartparens spinner vertico
-		visual-fill-column vterm vundo wgrep))
+   '(ace-window auctex base16-theme buffer-move casual company
+		company-box conda dired doom-modeline embark-consult
+		ess expand-region git-timemachine golden-ratio gptel
+		ht jinx lsp-mode lsp-ui lv magit marginalia
+		markdown-mode nerd-icons-completion nerd-icons-dired
+		orderless org-appear org-bullets org-capture
+		org-fragtog org-modern org-roam smartparens spinner
+		vertico visual-fill-column vterm vundo wgrep))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -33,6 +34,8 @@
  ;; If there is more than one, they won't work right.
  '(fixed-pitch ((t (:family "JetBrains Mono" :height 125))))
  '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic))))
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-title ((t (:inherit variable-pitch :weight bold :height 1.25 :underline nil))))
  '(org-level-1 ((t (:inherit variable-pitch :weight bold :height 1.1))))
  '(org-level-2 ((t (:inherit variable-pitch :weight bold :height 1.05))))

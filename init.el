@@ -166,7 +166,13 @@
   :config
   ;; load default config
   (require 'smartparens-config)
-  (smartparens-global-mode t))
+  (smartparens-global-mode t)
+  :bind
+  (("M-l" . sp-up-sexp)			; Movement out of parenthesis
+   ("M-L" . sp-backward-up-sexp)
+   ("C-M-d" . sp-down-sexp)
+   ("C-M-f" . sp-forward-sexp)		; Movement across sexps
+   ("C-M-b" . sp-backward-sexp)))
 
 ;; Language server
 
@@ -301,9 +307,6 @@
   :bind
   (("M-h" . er/expand-region)
    ("M-H" . mark-paragraph)))
-
-(global-set-key (kbd "M-l")  'up-list)
-(global-set-key (kbd "M-S-l") '(down-list -1))
 
 
 ;; Buffer navigation
