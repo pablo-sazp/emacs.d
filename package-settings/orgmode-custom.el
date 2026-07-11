@@ -44,6 +44,7 @@
   (setq org-blank-before-new-entry ; Always insert blank line before headings
       '((heading . t)	   
         (plain-list-item . nil)))
+  (setq org-cycle-separator-lines 0)
   )
 
 
@@ -64,6 +65,7 @@
   (org-mode . org-fragtog-mode))
 
 (with-eval-after-load 'org
+  (add-hook 'org-mode-hook (lambda () (org-latex-preview 16))) ; Preview all latex fragments when opening file
   (plist-put org-format-latex-options :scale 1.65)) ; Bigger latex preview
 
 ;; Centered org mode
@@ -76,10 +78,19 @@
 (use-package visual-fill-column
   :hook (org-mode . efs/org-mode-visual-fill))
 
+(use-package org-download
+  :after org
+  :custom
+  (org-download-image-dir "./.images/")
+  (org-download-heading-level nil)
+  :bind
+  (:map org-mode-map ("C-S-v" . org-download-clipboard)))
+
 
 ;; --------------- ORG-AGENDA -------------
 
-(setq org-agenda-files '("~/Vault/02-Agenda/"))
+(setq org-agenda-files '("~/Vault/02-Agenda/"
+			 "~/Vault/03-Projects/"))
 (setq org-agenda-span 20)
 
 ;; Clocking time
@@ -94,6 +105,41 @@
 	   (file "~/Vault/02-Agenda/emacs-todo.org")
 	   "* TODO %?"))))
 
+(global-set-key (kbd "<f9>") 'org-clock-goto) ; Go to clocked item
+(global-set-key (kbd "C-<f9>") 'org-clock-in)
+
+;; Refiling towards all project files
+(defun my/org-project-files ()
+  (file-expand-wildcards "~/Vault/03-Projects/*.org"))
+
+(setq org-refile-targets
+      '((nil :maxlevel . 3)
+	;;(org-agenda-files :maxlevel . 1)
+        (my/org-project-files :maxlevel . 2)))
+
+(setq org-refile-use-outline-path 'file)
+(setq org-outline-path-complete-in-steps nil)
+
+;; Open the corresponding file by current projectile project
+(use-package projectile
+  :config
+  (defun my/projectile-open-associated-note ()
+  "Open the Org note corresponding to the current Projectile project."
+  (interactive)
+  (let* ((project-name (projectile-project-name))
+         (note-file (expand-file-name (concat project-name ".org") "~/Vault/03-Projects/")))
+    (if (file-exists-p note-file)
+        (find-file note-file)
+      ;; If the note doesn't exist, offer to create it
+      (when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
+        (find-file note-file)))))
+  ;; Bind it to Projectile's map (e.g., C-c p n)
+  ;; (keymap-set projectile-command-map "n" #'my/projectile-open-associated-note)
+  ;; (transient-append-suffix 'projectile-dispatch "f" ; Shows it on the transient menu
+  ;;   '("n" "Project Note" my/projectile-open-associated-note))
+  :bind
+  ("C-c P" . my/projectile-open-associated-note))
+
 ;; --------------- ORG-BABEL -------------
 
 (with-eval-after-load 'org
@@ -101,6 +147,7 @@
     (org-babel-do-load-languages
      'org-babel-load-languages
      '((emacs-lisp . t)
+       (shell . t)
        (R . t)
        (python . t)))
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)) ; Redisplay images when executing code
@@ -110,9 +157,10 @@
 
 (with-eval-after-load 'org
   (dolist (el '(("r" . "src R :session :results output")
-		("rf" . "src R :session :results graphics file :file \"org-images/a.png\"")
+		("rf" . "src R :session :results graphics file :file \".images/0.png\"")
 		("p" . "src python :session :results output")
-		("pf" . "src python :session :results graphics file :file \"org-images/a.png\"")))
+		("pf" . "src python :session :results graphics file :file \".images/0.png\"")
+		("b" . "src bash :results output")))
     (add-to-list 'org-structure-template-alist el)))
 
 

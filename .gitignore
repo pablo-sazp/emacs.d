@@ -9,6 +9,11 @@ transient/
 tramp
 .emacs.*
 *.log
+*.eld
 .org-id*
 org-roam.db
 org-clock-save.el
+session.*
+bookmarks
+history
+.lsp*

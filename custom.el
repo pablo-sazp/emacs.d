@@ -24,8 +24,9 @@
 		ht jinx lsp-mode lsp-ui lv magit marginalia
 		markdown-mode nerd-icons-completion nerd-icons-dired
 		orderless org-appear org-bullets org-capture
-		org-fragtog org-modern org-roam smartparens spinner
-		vertico visual-fill-column vterm vundo wgrep))
+		org-download org-fragtog org-modern org-roam
+		projectile smartparens spinner vertico
+		visual-fill-column vterm vundo wgrep))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

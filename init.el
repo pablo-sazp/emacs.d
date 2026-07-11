@@ -78,7 +78,9 @@
   (("C-." . embark-act)
    ("M-." . embark-dwim)
    ("C-c m" . embark-select)
-   ("C-c e" . embark-export))
+   ("C-c e" . embark-export)
+   :map minibuffer-mode-map
+   ("C-c b" . embark-become))
   )
 
 (use-package embark-consult)
@@ -137,7 +139,7 @@
   :hook ((prog-mode) . (lambda () (company-mode)))
   :config
   (setq tab-always-indent 'complete)
-  (setq company-idle-delay 0.0)
+  (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
@@ -153,12 +155,21 @@
 (use-package magit)
 (use-package git-timemachine)
 
+;; Project management
+(use-package projectile
+  :init
+  (setq projectile-project-search-path '("~/Projects/"))
+  (require 'transient)
+  :config
+  (global-set-key (kbd "C-c p") 'projectile-dispatch)
+  (projectile-mode 1))
+  
+
 ;;Line numbers + others
 (setq-default display-line-numbers-type 'relative)
-(global-display-line-numbers-mode -1)	; Line numbers disabled by default
 (dolist (hook '(prog-mode-hook
 		LaTeX-mode-hook))
-  (add-hook hook (display-line-numbers-mode 1))) ; Enable line numbers only in these modes
+  (add-hook hook #'display-line-numbers-mode)) ; Enable line numbers only in these modes
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
