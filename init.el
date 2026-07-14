@@ -297,6 +297,15 @@
   (require 'smartparens-config)
   (smartparens-global-mode t))
 
+;; Multiple cursors
+(use-package multiple-cursors
+  :bind
+  ("M-n" . mc/mark-next-like-this)
+  ("M-N" . mc/unmark-next-like-this)
+  ("M-p" . mc/mark-previous-like-this)
+  ("M-P" . mc/unmark-previous-like-this)
+  ("<f2>" . mc/mark-all-like-this))
+
 
 ;;Autosaves on .emacs.d/auto-save/
 (setq auto-save-file-name-transforms

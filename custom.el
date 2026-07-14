@@ -18,15 +18,15 @@
      default))
  '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
  '(package-selected-packages
-   '(ace-window auctex base16-theme buffer-move casual company
-		company-box conda dired doom-modeline embark-consult
-		ess expand-region git-timemachine golden-ratio gptel
-		ht jinx lsp-mode lsp-ui lv magit marginalia
-		markdown-mode nerd-icons-completion nerd-icons-dired
-		orderless org-appear org-bullets org-capture
-		org-download org-fragtog org-modern org-roam
-		projectile smartparens spinner vertico
-		visual-fill-column vterm vundo wgrep))
+   '(ace-window anaphora auctex base16-theme buffer-move casual
+		company-box conda deferred doom-modeline doom-themes
+		embark-consult ess expand-region git-timemachine
+		golden-ratio gptel jinx lsp-ui magit marginalia
+		multiple-cursors nerd-icons-completion
+		nerd-icons-dired orderless org-appear org-bullets
+		org-download org-fragtog org-modern org-roam polymode
+		projectile request simple-httpd smartparens vertico
+		visual-fill-column vterm vundo websocket wgrep zmq))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
