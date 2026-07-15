@@ -5,10 +5,11 @@
   :hook
   ((LaTeX-mode . turn-on-reftex)	;Activate reftex
    (LaTeX-mode . (lambda ()
-		   (company-mode -1) ;Disable suggestions
 		   (setq-local sentence-end-double-space nil)	;Jump to points with M-e
 		   (variable-pitch-mode)
 		   (visual-line-mode)
+		   (display-line-numbers-mode 1)
+		   (setq-local display-line-numbers 'absolute)
 		   (setq-local line-spacing 0.05))))
   :config
   (setq TeX-auto-save t)

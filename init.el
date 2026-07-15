@@ -136,7 +136,8 @@
 (use-package company
   :defer t
   :diminish ""
-  :hook ((prog-mode) . (lambda () (company-mode)))
+  :hook
+  (prog-mode . company-mode)
   :config
   (setq tab-always-indent 'complete)
   (setq company-idle-delay 0.1)
@@ -164,27 +165,6 @@
   (global-set-key (kbd "C-c p") 'projectile-dispatch)
   (projectile-mode 1))
   
-
-;;Line numbers + others
-(setq-default display-line-numbers-type 'relative)
-(dolist (hook '(prog-mode-hook
-		LaTeX-mode-hook))
-  (add-hook hook #'display-line-numbers-mode)) ; Enable line numbers only in these modes
-
-(use-package smartparens
-  :ensure smartparens  ;; install the package
-  ;;:hook (prog-mode text-mode markdown-mode) ;; add `smartparens-mode` to these hooks
-  :config
-  ;; load default config
-  (require 'smartparens-config)
-  (smartparens-global-mode t)
-  :bind
-  (("M-l" . sp-up-sexp)			; Movement out of parenthesis
-   ("M-L" . sp-backward-up-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-f" . sp-forward-sexp)		; Movement across sexps
-   ("C-M-b" . sp-backward-sexp)))
-
 ;; Language server
 
 (use-package eglot
@@ -283,11 +263,8 @@
 
 
 ;; Line numbers + others
-(setq-default display-line-numbers-type 'relative)
-(global-display-line-numbers-mode -1)	; Line numbers disabled by default
-(dolist (hook '(prog-mode-hook
-		LaTeX-mode-hook))
-  (add-hook hook (display-line-numbers-mode 1))) ; Enable line numbers only in these modes
+(setq display-line-numbers-type 'relative)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode) ; Enable line numbers only in programming modes
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -295,7 +272,14 @@
   :config
   ;; load default config
   (require 'smartparens-config)
-  (smartparens-global-mode t))
+  (smartparens-global-mode t)
+  :bind
+  (("M-l" . sp-up-sexp)			; Movement out of parenthesis
+   ("M-L" . sp-backward-up-sexp)
+   ("C-M-d" . sp-down-sexp)
+   ("C-M-f" . sp-forward-sexp)		; Movement across sexps
+   ("C-M-b" . sp-backward-sexp)))
+
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -328,6 +312,12 @@
   (("M-h" . er/expand-region)
    ("M-H" . mark-paragraph)))
 
+(use-package casual
+  :bind
+  (:map calc-mode-map ("C-o" . casual-calc-tmenu))
+  (:map calc-alg-map ("C-o" . casual-calc-tmenu))
+  (:map dired-mode-map ("C-o" . casual-dired-tmenu))
+  (:map org-mode-map ("C-o" . casual-org-tmenu)))
 
 ;; Buffer navigation
 (use-package ace-window					; Switch windows

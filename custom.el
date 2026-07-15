@@ -18,7 +18,7 @@
      default))
  '(org-agenda-files '("/home/pablo/Vault/02-Agenda/agenda.org"))
  '(package-selected-packages
-   '(ace-window anaphora auctex base16-theme buffer-move casual
+   '(ace-window anaphora auctex base16-theme buffer-move casual company
 		company-box conda deferred doom-modeline doom-themes
 		embark-consult ess expand-region git-timemachine
 		golden-ratio gptel jinx lsp-ui magit marginalia
@@ -40,5 +40,4 @@
  '(org-document-title ((t (:inherit variable-pitch :weight bold :height 1.25 :underline nil))))
  '(org-level-1 ((t (:inherit variable-pitch :weight bold :height 1.1))))
  '(org-level-2 ((t (:inherit variable-pitch :weight bold :height 1.05))))
- '(org-level-3 ((t (:inherit variable-pitch :weight bold :height 1))))
  '(variable-pitch ((t (:family "Noto Sans" :height 125)))))
