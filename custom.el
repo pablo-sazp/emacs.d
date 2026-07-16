@@ -20,8 +20,8 @@
  '(package-selected-packages
    '(ace-window anaphora auctex base16-theme buffer-move casual company
 		company-box conda deferred doom-modeline doom-themes
-		embark-consult ess expand-region git-timemachine
-		golden-ratio gptel jinx lsp-ui magit marginalia
+		embark-consult ess ess-r-mode expand-region
+		git-timemachine gptel jinx lsp-ui magit marginalia
 		multiple-cursors nerd-icons-completion
 		nerd-icons-dired orderless org-appear org-bullets
 		org-download org-fragtog org-modern org-roam polymode
@@ -33,11 +33,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fixed-pitch ((t (:family "JetBrains Mono" :height 125))))
  '(font-lock-comment-face ((t (:foreground "#c1c9d6" :slant italic))))
  '(org-block ((t (:inherit fixed-pitch))))
  '(org-code ((t (:inherit (shadow fixed-pitch)))))
- '(org-document-title ((t (:inherit variable-pitch :weight bold :height 1.25 :underline nil))))
- '(org-level-1 ((t (:inherit variable-pitch :weight bold :height 1.1))))
- '(org-level-2 ((t (:inherit variable-pitch :weight bold :height 1.05))))
  '(variable-pitch ((t (:family "Noto Sans" :height 125)))))

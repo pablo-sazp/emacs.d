@@ -52,7 +52,7 @@
 (cua-mode t)
 (global-set-key (kbd "C-S-z") #'undo-redo)
 
-(require 'ess-site)			; This needs to be near the top, does not work otherwise
+(require 'ess-r-mode)			; This needs to be near the top, does not work otherwise
 
 ;; ------------------------------------ Minibuffer --------------------------------------
 
@@ -152,7 +152,11 @@
 	 ("C-p" . 'company-select-previous-or-abort)
 	 ("C-k" . 'company-select-previous-or-abort)))
 
+(use-package company-box
+  :after company
+  :hook (company-mode . company-box-mode))
 
+;; Git integration
 (use-package magit)
 (use-package git-timemachine)
 
@@ -167,13 +171,27 @@
   
 ;; Language server
 
-(use-package eglot
-  :ensure t
-  :hook ((python-mode . eglot-ensure)
-         (python-ts-mode . eglot-ensure))
+;; (defun efs/lsp-mode-setup ()
+;;   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+;;   (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook
+  ((python-mode . lsp-deferred)
+   (ess-r-mode . lsp-deferred))
+  :init
+  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
-  (add-to-list 'eglot-server-programs
-               '((python-mode python-ts-mode) . ("pylsp"))))
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui
+  :after lsp-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-delay 1.2))
 
 ;; Terminal
 
@@ -273,6 +291,8 @@
   ;; load default config
   (require 'smartparens-config)
   (smartparens-global-mode t)
+  :custom
+  (show-smartparens-global-mode t)
   :bind
   (("M-l" . sp-up-sexp)			; Movement out of parenthesis
    ("M-L" . sp-backward-up-sexp)
@@ -340,9 +360,7 @@
 (require 'python-custom)
 
 ;; General ess settings
-(with-eval-after-load 'ess-site
-  (require 'ess-custom)
-  )
+(require 'ess-settings)
 
 (add-to-list 'display-buffer-alist
 	     `("^\\*R\\(?::.*\\)?\\*$"
