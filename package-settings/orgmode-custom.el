@@ -45,6 +45,7 @@
       '((heading . t)	   
         (plain-list-item . nil)))
   (setq org-cycle-separator-lines 0)
+  (setq org-src-window-setup 'current-window)
   )
 
 
@@ -71,7 +72,7 @@
 ;; Centered org mode
 
 (defun efs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 125
+  (setq visual-fill-column-width 120
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
@@ -163,15 +164,18 @@
 		("b" . "src bash :results output")))
     (add-to-list 'org-structure-template-alist el)))
 
+(setq org-babel-default-header-args:R	; This code evaluate for every R src block
+      '((:prologue . "options(readxl.show_progress=FALSE)"))) ; No progress bar when importing files, better output format
+
 
 ;; This allows lsp completion in src python buffers
 
-;; (defun my/org-src-lsp-setup ()
-;;   "Activate LSP in the temporary C-c ' edit buffer for python."
-;;   (when (derived-mode-p 'python-mode)
-;;     (lsp-deferred)))
+(defun my/org-src-lsp-setup ()
+  "Activate LSP in the temporary edit buffer for python & R"
+  (when (derived-mode-p 'python-mode 'ess-r-mode)
+    (lsp-deferred)))
 
-;; (add-hook 'org-src-mode-hook #'my/org-src-lsp-setup)
+(add-hook 'org-src-mode-hook #'my/org-src-lsp-setup)
 
 ;; End of file
 (provide 'orgmode-custom)

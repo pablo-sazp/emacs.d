@@ -52,7 +52,7 @@
 (cua-mode t)
 (global-set-key (kbd "C-S-z") #'undo-redo)
 
-(require 'ess-site)			; This needs to be near the top, does not work otherwise
+(require 'ess-r-mode)			; This needs to be near the top, does not work otherwise
 
 ;; ------------------------------------ Minibuffer --------------------------------------
 
@@ -183,12 +183,15 @@
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
+  :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-doc-position 'bottom))
+  (lsp-ui-doc-position 'bottom)
+  (lsp-ui-doc-delay 1.2))
 
 ;; Terminal
 
@@ -288,6 +291,8 @@
   ;; load default config
   (require 'smartparens-config)
   (smartparens-global-mode t)
+  :custom
+  (show-smartparens-global-mode t)
   :bind
   (("M-l" . sp-up-sexp)			; Movement out of parenthesis
    ("M-L" . sp-backward-up-sexp)
@@ -355,9 +360,7 @@
 (require 'python-custom)
 
 ;; General ess settings
-(with-eval-after-load 'ess-site
-  (require 'ess-custom)
-  )
+(require 'ess-settings)
 
 (add-to-list 'display-buffer-alist
 	     `("^\\*R\\(?::.*\\)?\\*$"
