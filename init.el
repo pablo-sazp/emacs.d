@@ -207,6 +207,7 @@
 
 ;; LLM integration
 
+(setq auth-sources '("~/.emacs.d/.authinfo"))
 (use-package gptel
   :bind
   ("C-x l" . gptel-menu)
@@ -214,8 +215,8 @@
   (setq
    gptel-model 'gemini-flash-lite-latest
    gptel-backend (gptel-make-gemini "Gemini"
-                   :key "AQ.Ab8RN6I1h9erWnYczH1LIoTbfMCEa29mVuqJHosEgbHQAfUSYQ"
-                   :stream t)))
+		   :key (lambda () (gptel-api-key-from-auth-source "generativelanguage.googleapis.com"))
+		   :stream t)))
 
 
 (use-package markdown-mode		; Pretty markdown mode
