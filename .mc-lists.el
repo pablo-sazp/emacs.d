@@ -3,6 +3,13 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+	LaTeX-insert-left-brace
+	cua-paste
+	end-of-buffer
+	ignore-preserving-kill-region
+	org-beginning-of-line
+	org-end-of-line
+	org-self-insert-command
 	query-replace
 	sp-backward-sexp
 	sp-backward-up-sexp
@@ -13,7 +20,10 @@
 (setq mc/cmds-to-run-once
       '(
 	consult-buffer
-	reposition-window
-	occur
 	consult-line
+	lsp-ui-doc--handle-mouse-movement
+	occur
+	org-edit-src-save
+	python-shell-send-buffer
+	reposition-window
 	))

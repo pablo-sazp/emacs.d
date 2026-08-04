@@ -16,7 +16,7 @@
      `(org-level-2 ((t (,@headline :height 1.1))))
      `(org-level-1 ((t (,@headline :height 1.25))))
      `(org-document-title ((t (,@headline  :height 1.3 :underline nil))))))
-  ;;(set-face-attribute 'org-table nil :inherit 'fixed-pitch) ;Small settings for tables, blocks, etc.
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch) ;Small settings for tables, blocks, etc.
   ;;(set-face-attribute 'org-block nil :inherit 'default :family "Hack")
   )
 
@@ -157,11 +157,11 @@
 ;; Code block settings
 
 (with-eval-after-load 'org
-  (dolist (el '(("r" . "src R :session :results output")
-		("rf" . "src R :session :results graphics file :file \".images/0.png\"")
-		("p" . "src python :session :results output")
-		("pf" . "src python :session :results graphics file :file \".images/0.png\"")
-		("b" . "src bash :results output")))
+  (dolist (el '(("r" . "src R :session :results output :exports both")
+		("rf" . "src R :session :results graphics file :dir .images/ :file 0.png :exports both")
+		("p" . "src python :session :results output :exports both")
+		("pf" . "src python :session :results graphics file :dir .images/ :file 0.png :exports both")
+		("b" . "src bash :results output :eval query :exports both")))
     (add-to-list 'org-structure-template-alist el)))
 
 (setq org-babel-default-header-args:R	; This code evaluate for every R src block
@@ -171,8 +171,8 @@
 ;; This allows lsp completion in src python buffers
 
 (defun my/org-src-lsp-setup ()
-  "Activate LSP in the temporary edit buffer for python & R"
-  (when (derived-mode-p 'python-mode 'ess-r-mode)
+  "Activate LSP in the temporary edit buffer for python."
+  (when (member major-mode '(python-mode ess-r-mode))
     (lsp-deferred)))
 
 (add-hook 'org-src-mode-hook #'my/org-src-lsp-setup)

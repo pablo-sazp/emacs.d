@@ -48,6 +48,8 @@
 (if (window-system)
     (set-emacs-theme-dark))
 
+(defvar display-buffer-alist nil)	; Initializes the variable so that I can add to it later
+
 ;;CUA mode
 (cua-mode t)
 (global-set-key (kbd "C-S-z") #'undo-redo)
@@ -71,7 +73,8 @@
   ("C-s" . consult-line)
   ("C-M-s" . isearch-forward)
   ("M-g i" . consult-imenu)
-  ("C-x b" . consult-buffer))
+  ("C-x b" . consult-buffer)
+  ("C-M-v" . consult-yank-from-kill-ring))
 
 (use-package embark
   :bind
@@ -154,7 +157,10 @@
 
 (use-package company-box
   :after company
-  :hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode)
+  :config
+  (setq company-box-doc-enable nil)
+  (setq company-auto-update-doc nil))
 
 ;; Git integration
 (use-package magit)
@@ -268,8 +274,6 @@
 (menu-bar-mode -1)
 (setq ring-bell-function 'ignore)
 
-(defvar display-buffer-alist nil)	; Initializes the variable so that I can add to it later
-
 (setq mouse-wheel-progressive-speed nil) ;Mouse speed settings
 (setq mouse-wheel-scroll-amount '(2))
 
@@ -327,6 +331,8 @@
 (setq mark-ring-max '5); Mark ring
 (setq global-mark-ring-max '5)
 
+(global-set-key (kbd "C--") #'join-line)
+
 (use-package expand-region  ; Expand regions
   :ensure t
   :bind
@@ -335,10 +341,10 @@
 
 (use-package casual
   :bind
-  (:map calc-mode-map ("C-o" . casual-calc-tmenu))
-  (:map calc-alg-map ("C-o" . casual-calc-tmenu))
-  (:map dired-mode-map ("C-o" . casual-dired-tmenu))
-  (:map org-mode-map ("C-o" . casual-org-tmenu)))
+  (:map calc-mode-map ("?" . casual-calc-tmenu))
+  (:map calc-alg-map ("?" . casual-calc-tmenu))
+  (:map dired-mode-map ("?" . casual-dired-tmenu))
+  (:map org-mode-map ("?" . casual-org-tmenu)))
 
 ;; Buffer navigation
 (use-package ace-window					; Switch windows
@@ -351,6 +357,29 @@
    ("C-<right>" . buf-move-right)
    ("C-<up>" . buf-move-up)
    ("C-<down>" . buf-move-down)))
+
+(use-package popper
+  :bind (("C-<dead-grave>"   . popper-toggle)
+         ("M-<dead-grave>"   . popper-cycle)
+         ("C-M-<dead-grave>" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+	  "\\*Gemini.*\\*"
+	  "\\*Buffer List\\*"
+          help-mode
+          compilation-mode
+	  occur-mode
+	  "\\*Python.*\\*"
+	  "\\*R.*\\*"
+	  "\\*TeX Help\\*"))
+  (popper-mode +1)
+  (popper-echo-mode +1)
+  :config
+  (setq popper-group-function #'popper-group-by-projectile)
+  (setq popper-display-control nil))
 
 ;; Load programing packages + custom settings
 (add-to-list 'load-path "~/.emacs.d/package-settings/")
@@ -369,13 +398,23 @@
 	       (window-height . 0.3)
 	       (reusable-frames . nil)))
 
+;; Modified Help buffer size
+(with-eval-after-load 'company
+  (add-to-list 'display-buffer-alist
+               '("^\\*Help\\*$"
+                 (display-buffer-reuse-window display-buffer-in-side-window)
+                 (side . right)
+                 (slot . 1)             ; Slot 1 keeps it separate from Slot 0 (your active *Help*)
+                 (window-width . 0.45)
+                 (inhibit-same-window . t))))
+
+
 ;; Custom functions
 ;;(add-to-list 'load-path "~/.emacs.d/functions/")
 (use-package toggle-terminal
   :load-path "~/.emacs.d/functions/"
   :bind
   ("<f12>" . myfun/toggle-layout))
-
 
 ;; Packages installed from git
 (use-package ess-plot
