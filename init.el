@@ -21,8 +21,8 @@
 
 ;;Theme
 (add-to-list 'default-frame-alist
-             '(font . "Hack-11"))
-(set-face-attribute 'default nil :font "Hack" :height 114)
+             '(font . "Hack-12"))
+(set-face-attribute 'default nil :font "Hack" :height 124)
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 125 :weight 'regular)
 
 (use-package base16-theme)
@@ -237,13 +237,15 @@
   :config
   (setq which-key-idle-delay 0.8))
 
-(use-package jinx
-  :hook
-  (LaTeX-mode . jinx-mode)		;Activate jinx mode only in latex
-  (text-mode . jinx-mode)
-  (org-mode . jinx-mode)
-  :config
-  (global-jinx-mode -1))		;Disabled by default
+;; Jinx does not work for now
+;; (use-package jinx
+;;   :hook
+;;   (LaTeX-mode . jinx-mode)		;Activate jinx mode only in latex
+;;   (text-mode . jinx-mode)
+;;   (org-mode . jinx-mode)
+;;   :config
+;;   (global-jinx-mode -1))
+
 
 ;;Doom modeline
 (use-package doom-modeline
@@ -359,9 +361,9 @@
    ("C-<down>" . buf-move-down)))
 
 (use-package popper
-  :bind (("C-<dead-grave>"   . popper-toggle)
-         ("M-<dead-grave>"   . popper-cycle)
-         ("C-M-<dead-grave>" . popper-toggle-type))
+  :bind (("C-+"   . popper-toggle)
+         ("M-+"   . popper-cycle)
+         ("C-M-+" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
@@ -374,7 +376,8 @@
 	  occur-mode
 	  "\\*Python.*\\*"
 	  "\\*R.*\\*"
-	  "\\*TeX Help\\*"))
+	  "\\*TeX Help\\*"
+	  "\\*eshell\\*"))
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
