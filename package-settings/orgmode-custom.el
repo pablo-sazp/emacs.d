@@ -168,14 +168,10 @@
       '((:prologue . "options(readxl.show_progress=FALSE)"))) ; No progress bar when importing files, better output format
 
 
-;; This allows lsp completion in src python buffers
-
-(defun my/org-src-lsp-setup ()
-  "Activate LSP in the temporary edit buffer for python."
-  (when (member major-mode '(python-mode ess-r-mode))
-    (lsp-deferred)))
-
-(add-hook 'org-src-mode-hook #'my/org-src-lsp-setup)
+;; This allows lsp-mode completion in src python buffers
+(defun org-babel-edit-prep:python (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp))
 
 ;; End of file
 (provide 'orgmode-custom)

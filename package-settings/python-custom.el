@@ -8,6 +8,10 @@
   :bind
   ("C-x c" . conda-env-activate))
 
+;; LSP-mode for all python buffers
+(with-eval-after-load 'lsp-mode
+  (add-hook 'python-mode-hook 'lsp))
+
 ;; Disable eldoc when lsp is active
 (add-hook 'python-mode-hook
           (lambda ()
