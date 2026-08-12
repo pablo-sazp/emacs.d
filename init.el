@@ -343,8 +343,8 @@
   :bind
   (:map calc-mode-map ("?" . casual-calc-tmenu))
   (:map calc-alg-map ("?" . casual-calc-tmenu))
-  (:map dired-mode-map ("?" . casual-dired-tmenu))
-  (:map org-mode-map ("?" . casual-org-tmenu)))
+  (:map dired-mode-map ("?" . casual-dired-tmenu)))
+  ;;(:map org-mode-map ("?" . casual-org-tmenu))
 
 ;; Buffer navigation
 (use-package ace-window					; Switch windows

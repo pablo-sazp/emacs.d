@@ -7,6 +7,7 @@
 	cua-paste
 	end-of-buffer
 	ignore-preserving-kill-region
+	indent-for-tab-command
 	org-beginning-of-line
 	org-end-of-line
 	org-self-insert-command
@@ -21,8 +22,10 @@
       '(
 	consult-buffer
 	consult-line
+	cua-copy-handler
 	lsp-ui-doc--handle-mouse-movement
 	occur
+	org-ctrl-c-ctrl-c
 	org-edit-src-save
 	python-shell-send-buffer
 	reposition-window
