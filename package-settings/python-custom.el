@@ -5,12 +5,18 @@
   (add-hook 'find-file-hook (lambda () (when (bound-and-true-p conda-project-env-path)
                                          (conda-env-activate-for-buffer)))) ;This can be improved
   (custom-set-variables '(conda-anaconda-home "~/.miniconda/"))
+  ;;(conda-env-autoactivate-mode 1)
   :bind
   ("C-x c" . conda-env-activate))
 
 ;; LSP-mode for all python buffers
-(with-eval-after-load 'lsp-mode
-  (add-hook 'python-mode-hook 'lsp))
+(use-package lsp-pyright
+  :ensure t
+  :custom
+  (lsp-pyright-langserver-command "basedpyright")
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 ;; Disable eldoc when lsp is active
 (add-hook 'python-mode-hook
