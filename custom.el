@@ -21,8 +21,8 @@
    '(ace-window anaphora auctex base16-theme buffer-move casual company
 		company-box conda deferred doom-modeline doom-themes
 		embark-consult ess ess-r-mode expand-region
-		git-timemachine gptel jinx lsp-ui magit marginalia
-		multiple-cursors nerd-icons-completion
+		git-timemachine gptel lsp-pyright lsp-ui magit
+		marginalia multiple-cursors nerd-icons-completion
 		nerd-icons-dired orderless org-appear org-bullets
 		org-download org-fragtog org-modern org-roam polymode
 		popper projectile request simple-httpd smartparens

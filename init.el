@@ -143,7 +143,7 @@
   (prog-mode . company-mode)
   :config
   (setq tab-always-indent 'complete)
-  (setq company-idle-delay 0.1)
+  (setq company-idle-delay 1)
   (setq company-minimum-prefix-length 3)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
@@ -174,7 +174,13 @@
   :config
   (global-set-key (kbd "C-c p") 'projectile-dispatch)
   (projectile-mode 1))
-  
+
+
+;; ElDoc settings
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-echo-area-display-truncation-message nil)
+(setq eldoc-idle-delay 5)
+
 ;; Language server
 
 ;; (defun efs/lsp-mode-setup ()
@@ -377,7 +383,9 @@
 	  occur-mode
 	  "\\*Python.*\\*"
 	  "\\*R.*\\*"
-	  "\\*TeX Help\\*"))
+	  "\\*TeX Help\\*"
+	  "\\*lsp-help\\*"
+	  "\\*eshell\\*"))
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
