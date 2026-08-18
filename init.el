@@ -289,7 +289,7 @@
 
 ;;Visual + editor settings
 (setq inhibit-startup-message t)
-(desktop-save-mode 1) ;save workspace
+(desktop-save-mode -1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
