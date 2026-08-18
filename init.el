@@ -143,7 +143,7 @@
   (prog-mode . company-mode)
   :config
   (setq tab-always-indent 'complete)
-  (setq company-idle-delay 1)
+  (setq company-idle-delay 0.15)
   (setq company-minimum-prefix-length 3)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
@@ -179,7 +179,7 @@
 ;; ElDoc settings
 (setq eldoc-echo-area-use-multiline-p nil)
 (setq eldoc-echo-area-display-truncation-message nil)
-(setq eldoc-idle-delay 5)
+
 
 ;; Language server
 
@@ -199,14 +199,24 @@
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
-  (lsp-enable-which-key-integration t))
+  (lsp-enable-which-key-integration t)
+  (setq lsp-eldoc-enable-hover nil)	       ; Disable description in echo area
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil))
+
+(defun my/lsp-enable-other-completions ()
+  "Allow company-files (and other backends) to run alongside company-capf in LSP buffers."
+  (setq-local company-backends
+              (list (append '(company-capf) '(:with company-files company-dabbrev-code)))))
+
+(add-hook 'lsp-managed-mode-hook #'my/lsp-enable-other-completions)
 
 (use-package lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
   :custom
   (lsp-ui-doc-position 'bottom)
-  (lsp-ui-doc-delay 1.2))
+  (lsp-ui-doc-delay 0.5))
 
 ;; Terminal
 

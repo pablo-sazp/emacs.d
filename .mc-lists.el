@@ -24,6 +24,7 @@
 	consult-line
 	cua-copy-handler
 	lsp-ui-doc--handle-mouse-movement
+	mouse-set-region
 	occur
 	org-ctrl-c-ctrl-c
 	org-edit-src-save
