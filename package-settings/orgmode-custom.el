@@ -69,6 +69,7 @@
   (add-hook 'org-mode-hook (lambda () (org-latex-preview 16))) ; Preview all latex fragments when opening file
   (plist-put org-format-latex-options :scale 1.65)) ; Bigger latex preview
 
+
 ;; Centered org mode
 
 (defun efs/org-mode-visual-fill ()
@@ -95,9 +96,9 @@
 (setq org-agenda-span 20)
 
 ;; Clocking time
-
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+(setq org-duration-format (quote h:mm))	; Changes time format to only show hours
 
 ;; Org templates
 (with-eval-after-load 'org
