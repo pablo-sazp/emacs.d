@@ -146,14 +146,15 @@
 
 (with-eval-after-load 'org
   ;; Languages
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (shell . t)
-       (R . t)
-       (python . t)))
-  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)) ; Redisplay images when executing code
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (R . t)
+     (python . t))))
 
+(add-hook 'org-babel-after-execute-hook (lambda () 
+					  (org-redisplay-inline-images))) ; Redisplay images when executing code
 
 ;; Code block settings
 
