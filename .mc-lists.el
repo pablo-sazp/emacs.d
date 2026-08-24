@@ -23,6 +23,7 @@
 	consult-buffer
 	consult-line
 	cua-copy-handler
+	ignore
 	lsp-ui-doc--handle-mouse-movement
 	mouse-set-region
 	occur
