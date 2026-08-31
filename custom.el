@@ -26,8 +26,8 @@
 		nerd-icons-dired orderless org-appear org-bullets
 		org-download org-fragtog org-modern org-roam polymode
 		popper projectile request simple-httpd smartparens
-		vertico visual-fill-column vterm vundo websocket wgrep
-		zmq))
+		treesit-auto vertico visual-fill-column vterm vundo
+		websocket wgrep zmq))
  '(safe-local-variable-values
    '((TeX-engine . xelatex) (conda-env-current . "bacillus-genomics")))
  '(tool-bar-mode nil))

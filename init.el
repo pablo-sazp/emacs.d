@@ -342,7 +342,17 @@
   (indent-bars-pattern ".")
   (indent-bars-display-on-blank-lines 'least)
   (indent-bars-starting-column 0)
-  (indent-bars-no-descend-lists 'skip))
+  (indent-bars-no-descend-lists 'skip)
+  (indent-bars-treesit-support t))	; Add tree-sitter support, language-specific settings are in the respective file
+
+;; Tree-sitter
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-auto-langs '(python bash))
+  :config
+  (treesit-auto-add-to-auto-mode-alist '(python bash))
+  (global-treesit-auto-mode))
 
 ;; Multiple cursors
 (use-package multiple-cursors
