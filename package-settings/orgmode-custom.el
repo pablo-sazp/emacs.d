@@ -175,5 +175,10 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
 
+(add-hook 'python-mode-hook
+          (lambda ()
+            (when (fboundp 'python-ts-mode)
+              (python-ts-mode))))
+
 ;; End of file
 (provide 'orgmode-custom)

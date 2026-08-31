@@ -6,6 +6,7 @@ auto-save/
 elpa/
 eshell/
 transient/
+tree-sitter/
 tramp
 .emacs.*
 *.log
