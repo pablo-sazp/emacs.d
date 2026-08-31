@@ -25,8 +25,8 @@
   ((org-mode . efs/org-mode-setup)
   (org-mode . (lambda () (custom-theme-set-faces
    'user
-   '(fixed-pitch ((t ( :family "Hack" :height 114))))
-   '(variable-pitch ((t (:family "DejaVu Sans" :height 124))))
+   ;; '(fixed-pitch ((t ( :family "Hack" :height 114))))
+   ;; '(variable-pitch ((t (:family "DejaVu Sans" :height 124))))
    '(org-block ((t (:inherit fixed-pitch))))
    '(org-code ((t (:inherit (shadow fixed-pitch)))))
    )))
