@@ -20,12 +20,16 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
+(push '(fullscreen . maximized) default-frame-alist) ; Start EMACS maximized
+
+(setq-default line-spacing 2)
+
 (add-to-list 'default-frame-alist
              '(font . "Hack-11"))
 (set-face-attribute 'default nil :font "Hack" :height 114)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 125 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 114 :weight 'regular)
 
-(use-package base16-theme)
+(use-package doom-themes)
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
     (let* ((window-id (frame-parameter frame 'outer-window-id))
@@ -112,6 +116,8 @@
 
 ;; Dired stuff
 (setq delete-by-moving-to-trash t)	; Send to trash when deleting with dired
+(setq dired-dwim-target t)
+(setq dired-kill-when-opening-new-dired-buffer t) ; Delete buffer when opening a new directory
 
 (use-package nerd-icons
   :demand t
@@ -145,6 +151,7 @@
   (setq tab-always-indent 'complete)
   (setq company-idle-delay 0.15)
   (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
 	 :map company-active-map
@@ -287,7 +294,7 @@
 
 ;;Visual + editor settings
 (setq inhibit-startup-message t)
-(desktop-save-mode 1) ;save workspace
+(desktop-save-mode -1) ;save workspace
 (tool-bar-mode -1) ;remove toolbar
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
@@ -304,9 +311,10 @@
       )
 
 
-;; Line numbers + others
+;; Line numbers and other programing features
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode) ; Enable line numbers only in programming modes
+(setq display-line-numbers-width-start +1)
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -324,6 +332,17 @@
    ("C-M-f" . sp-forward-sexp)		; Movement across sexps
    ("C-M-b" . sp-backward-sexp)))
 
+;; Indent highlighting
+(use-package indent-bars
+  :hook (prog-mode . indent-bars-mode)
+  :custom
+  (indent-bars-color '("dimgray" :face-bg t :blend nil))
+  (indent-bars-color-by-depth nil)
+  (indent-bars-highlight-current-depth '(:color "DarkSeaGreen"))
+  (indent-bars-pattern ".")
+  (indent-bars-display-on-blank-lines 'least)
+  (indent-bars-starting-column 0)
+  (indent-bars-no-descend-lists 'skip))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -340,6 +359,10 @@
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
 (setq backup-directory-alist
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+;; Revert buffers automatically when file updates on disk
+(setq global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers 1) ; Also for dired
 
 ;;Usage
 (setq enable-recursive-minibuffers t)
@@ -378,9 +401,9 @@
    ("C-<down>" . buf-move-down)))
 
 (use-package popper
-  :bind (("C-<dead-grave>"   . popper-toggle)
-         ("M-<dead-grave>"   . popper-cycle)
-         ("C-M-<dead-grave>" . popper-toggle-type))
+  :bind (("C-+"   . popper-toggle)
+         ("M-+"   . popper-cycle)
+         ("C-M-+" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
@@ -391,6 +414,7 @@
           help-mode
           compilation-mode
 	  occur-mode
+	  "\\*vterm.*\\*"
 	  "\\*Python.*\\*"
 	  "\\*R.*\\*"
 	  "\\*TeX Help\\*"
