@@ -1,0 +1,3 @@
+#+Title: %? Meeting - %<%d-%m-%Y>
+#+filetags: :Meeting:
+#+Date: %<%d-%m-%Y>

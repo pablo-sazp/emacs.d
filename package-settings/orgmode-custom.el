@@ -105,7 +105,10 @@
   (setq org-capture-templates
 	'(("e" "Emacs config changes" entry
 	   (file "~/Vault/02-Agenda/emacs-todo.org")
-	   "* TODO %?"))))
+	   "* %?")
+	  ("p" "Project note" entry
+	   (file+olp (expand-file-name (concat (projectile-project-name) ".org") "~/Vault/03-Projects/") "Ideas")
+	   "** TODO %?"))))
 
 (global-set-key (kbd "<f9>") 'org-clock-goto) ; Go to clocked item
 (global-set-key (kbd "C-<f9>") 'org-clock-in)
@@ -135,10 +138,6 @@
       ;; If the note doesn't exist, offer to create it
       (when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
         (find-file note-file)))))
-  ;; Bind it to Projectile's map (e.g., C-c p n)
-  ;; (keymap-set projectile-command-map "n" #'my/projectile-open-associated-note)
-  ;; (transient-append-suffix 'projectile-dispatch "f" ; Shows it on the transient menu
-  ;;   '("n" "Project Note" my/projectile-open-associated-note))
   :bind
   ("C-c P" . my/projectile-open-associated-note))
 
@@ -179,6 +178,7 @@
           (lambda ()
             (when (fboundp 'python-ts-mode)
               (python-ts-mode))))
+
 
 ;; End of file
 (provide 'orgmode-custom)
