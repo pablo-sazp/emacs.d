@@ -71,7 +71,6 @@
 
 
 ;; Centered org mode
-
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 120
         visual-fill-column-center-text t)
@@ -129,15 +128,15 @@
 (use-package projectile
   :config
   (defun my/projectile-open-associated-note ()
-  "Open the Org note corresponding to the current Projectile project."
-  (interactive)
-  (let* ((project-name (projectile-project-name))
-         (note-file (expand-file-name (concat project-name ".org") "~/Vault/03-Projects/")))
-    (if (file-exists-p note-file)
-        (find-file note-file)
-      ;; If the note doesn't exist, offer to create it
-      (when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
-        (find-file note-file)))))
+    "Open the Org note corresponding to the current Projectile project."
+    (interactive)
+    (let* ((project-name (projectile-project-name))
+           (note-file (expand-file-name (concat project-name ".org") "~/Vault/03-Projects/")))
+      (if (file-exists-p note-file)
+          (find-file note-file)
+	;; If the note doesn't exist, offer to create it
+	(when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
+          (find-file note-file)))))
   :bind
   ("C-c P" . my/projectile-open-associated-note))
 

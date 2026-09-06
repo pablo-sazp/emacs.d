@@ -3,6 +3,7 @@ auto-save-list/
 auto-save/
 *~*
 *#*
+custom.el
 elpa/
 eshell/
 transient/
@@ -19,3 +20,4 @@ bookmarks
 history
 .lsp*
 .authinfo
+full_library.bib

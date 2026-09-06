@@ -1,0 +1,9 @@
+#+title: ${citar-title} (${citar-date})
+#+filetags: :${citar-type}:
+#+Authors: ${citar-author}
+
+* Abstract
+${citar-abstract}
+
+* Notes
+%?

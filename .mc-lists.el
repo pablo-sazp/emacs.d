@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
 	LaTeX-insert-left-brace
+	comment-dwim
 	cua-paste
 	end-of-buffer
 	ignore-preserving-kill-region
@@ -16,6 +17,7 @@
 	sp-backward-up-sexp
 	sp-forward-sexp
 	sp-up-sexp
+	xref-go-forward
 	))
 
 (setq mc/cmds-to-run-once
@@ -23,6 +25,7 @@
 	consult-buffer
 	consult-line
 	cua-copy-handler
+	handle-switch-frame
 	ignore
 	lsp-ui-doc--handle-mouse-movement
 	mouse-set-region

@@ -6,7 +6,6 @@
 ;; (require 'server)
 ;; (when (not (server-running-p)) (server-start))
 
-
 ;;Packages
 (require 'package)
 
@@ -27,7 +26,7 @@
 (add-to-list 'default-frame-alist
              '(font . "Hack-11"))
 (set-face-attribute 'default nil :font "Hack" :height 114)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 114 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 118 :weight 'regular)
 
 (use-package doom-themes)
 (defun set-emacs-frames (variant)
@@ -228,6 +227,7 @@
 ;; Terminal
 
 (use-package vterm
+  :ensure nil
   :config
   (add-to-list 'display-buffer-alist
 	     `("*vterm*"
@@ -336,14 +336,19 @@
 (use-package indent-bars
   :hook (prog-mode . indent-bars-mode)
   :custom
+  (indent-bars-pattern ".")
+  ;; (indent-bars-starting-column 0)
+  (indent-bars-no-descend-lists 'skip)
+  (indent-bars-display-on-blank-lines 'least)
   (indent-bars-color '("dimgray" :face-bg t :blend 0.8))
   (indent-bars-color-by-depth nil)
-  (indent-bars-highlight-current-depth '(:color "DarkSeaGreen" :blend 0.7))
-  (indent-bars-pattern ".")
-  (indent-bars-display-on-blank-lines 'least)
-  (indent-bars-starting-column 0)
-  (indent-bars-no-descend-lists 'skip)
-  (indent-bars-treesit-support t))	; Add tree-sitter support, language-specific settings are in the respective file
+  (indent-bars-highlight-current-depth '(:color "DarkSeaGreen"))
+  ;; Method for in scope bars from tree sitter
+  (indent-bars-treesit-support t) ; Add tree-sitter support, language-specific settings are in the respective file
+  (indent-bars-ts-color '("dimgray" :face-bg t :blend 0.6))
+  (indent-bars-ts-highlight-current-depth nil)
+  (indent-bars-treesit-scope-min-lines 2))
+  
 
 ;; Tree-sitter
 (use-package treesit-auto
@@ -442,6 +447,7 @@
 (require 'auctex-custom)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
+(require 'citar-custom)
 (require 'python-custom)
 
 ;; General ess settings
