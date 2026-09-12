@@ -25,8 +25,8 @@
   ((org-mode . efs/org-mode-setup)
   (org-mode . (lambda () (custom-theme-set-faces
    'user
-   '(fixed-pitch ((t ( :family "Hack" :height 114))))
-   '(variable-pitch ((t (:family "DejaVu Sans" :height 124))))
+   ;; '(fixed-pitch ((t ( :family "Hack" :height 114))))
+   ;; '(variable-pitch ((t (:family "DejaVu Sans" :height 124))))
    '(org-block ((t (:inherit fixed-pitch))))
    '(org-code ((t (:inherit (shadow fixed-pitch)))))
    )))
@@ -71,7 +71,6 @@
 
 
 ;; Centered org mode
-
 (defun efs/org-mode-visual-fill ()
   (setq visual-fill-column-width 170
         visual-fill-column-center-text t)
@@ -105,7 +104,10 @@
   (setq org-capture-templates
 	'(("e" "Emacs config changes" entry
 	   (file "~/Vault/02-Agenda/emacs-todo.org")
-	   "* TODO %?"))))
+	   "* %?")
+	  ("p" "Project note" entry
+	   (file+olp (expand-file-name (concat (projectile-project-name) ".org") "~/Vault/03-Projects/") "Ideas")
+	   "** TODO %?"))))
 
 (global-set-key (kbd "<f9>") 'org-clock-goto) ; Go to clocked item
 (global-set-key (kbd "C-<f9>") 'org-clock-in)
@@ -126,19 +128,15 @@
 (use-package projectile
   :config
   (defun my/projectile-open-associated-note ()
-  "Open the Org note corresponding to the current Projectile project."
-  (interactive)
-  (let* ((project-name (projectile-project-name))
-         (note-file (expand-file-name (concat project-name ".org") "~/Vault/03-Projects/")))
-    (if (file-exists-p note-file)
-        (find-file note-file)
-      ;; If the note doesn't exist, offer to create it
-      (when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
-        (find-file note-file)))))
-  ;; Bind it to Projectile's map (e.g., C-c p n)
-  ;; (keymap-set projectile-command-map "n" #'my/projectile-open-associated-note)
-  ;; (transient-append-suffix 'projectile-dispatch "f" ; Shows it on the transient menu
-  ;;   '("n" "Project Note" my/projectile-open-associated-note))
+    "Open the Org note corresponding to the current Projectile project."
+    (interactive)
+    (let* ((project-name (projectile-project-name))
+           (note-file (expand-file-name (concat project-name ".org") "~/Vault/03-Projects/")))
+      (if (file-exists-p note-file)
+          (find-file note-file)
+	;; If the note doesn't exist, offer to create it
+	(when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
+          (find-file note-file)))))
   :bind
   ("C-c P" . my/projectile-open-associated-note))
 
@@ -174,6 +172,12 @@
 (defun org-babel-edit-prep:python (babel-info)
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (when (fboundp 'python-ts-mode)
+              (python-ts-mode))))
+
 
 ;; End of file
 (provide 'orgmode-custom)

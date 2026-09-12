@@ -1,0 +1,6 @@
+#+Title: ${title}
+#+filetags: :Seminar:
+#+Speaker: %?
+#+Date: <%<%Y-%m-%d %a %H:%M>>
+
+%?

@@ -6,7 +6,6 @@
 ;; (require 'server)
 ;; (when (not (server-running-p)) (server-start))
 
-
 ;;Packages
 (require 'package)
 
@@ -20,12 +19,16 @@
 (setq use-package-always-ensure t)
 
 ;;Theme
-(add-to-list 'default-frame-alist
-             '(font . "Hack-12"))
-(set-face-attribute 'default nil :font "Hack" :height 124)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 125 :weight 'regular)
+(push '(fullscreen . maximized) default-frame-alist) ; Start EMACS maximized
 
-(use-package base16-theme)
+(setq-default line-spacing 2)
+
+(add-to-list 'default-frame-alist
+             '(font . "Hack-11"))
+(set-face-attribute 'default nil :font "Hack" :height 114)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 118 :weight 'regular)
+
+(use-package doom-themes)
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
     (let* ((window-id (frame-parameter frame 'outer-window-id))
@@ -112,6 +115,8 @@
 
 ;; Dired stuff
 (setq delete-by-moving-to-trash t)	; Send to trash when deleting with dired
+(setq dired-dwim-target t)
+(setq dired-kill-when-opening-new-dired-buffer t) ; Delete buffer when opening a new directory
 
 (use-package nerd-icons
   :demand t
@@ -145,6 +150,7 @@
   (setq tab-always-indent 'complete)
   (setq company-idle-delay 0.15)
   (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
   :bind (:map company-mode-map
 	 ("<tab>" . 'company-indent-or-complete-common)
 	 :map company-active-map
@@ -221,6 +227,7 @@
 ;; Terminal
 
 (use-package vterm
+  :ensure nil
   :config
   (add-to-list 'display-buffer-alist
 	     `("*vterm*"
@@ -306,9 +313,10 @@
       )
 
 
-;; Line numbers + others
+;; Line numbers and other programing features
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode) ; Enable line numbers only in programming modes
+(setq display-line-numbers-width-start +1)
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -326,6 +334,32 @@
    ("C-M-f" . sp-forward-sexp)		; Movement across sexps
    ("C-M-b" . sp-backward-sexp)))
 
+;; Indent highlighting
+(use-package indent-bars
+  :hook (prog-mode . indent-bars-mode)
+  :custom
+  (indent-bars-pattern ".")
+  ;; (indent-bars-starting-column 0)
+  (indent-bars-no-descend-lists 'skip)
+  (indent-bars-display-on-blank-lines 'least)
+  (indent-bars-color '("dimgray" :face-bg t :blend 0.8))
+  (indent-bars-color-by-depth nil)
+  (indent-bars-highlight-current-depth '(:color "DarkSeaGreen"))
+  ;; Method for in scope bars from tree sitter
+  (indent-bars-treesit-support t) ; Add tree-sitter support, language-specific settings are in the respective file
+  (indent-bars-ts-color '("dimgray" :face-bg t :blend 0.6))
+  (indent-bars-ts-highlight-current-depth nil)
+  (indent-bars-treesit-scope-min-lines 2))
+  
+
+;; Tree-sitter
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-auto-langs '(python bash))
+  :config
+  (treesit-auto-add-to-auto-mode-alist '(python bash))
+  (global-treesit-auto-mode))
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -342,6 +376,10 @@
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
 (setq backup-directory-alist
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+;; Revert buffers automatically when file updates on disk
+(setq global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers 1) ; Also for dired
 
 ;;Usage
 (setq enable-recursive-minibuffers t)
@@ -393,6 +431,7 @@
           help-mode
           compilation-mode
 	  occur-mode
+	  "\\*vterm.*\\*"
 	  "\\*Python.*\\*"
 	  "\\*R.*\\*"
 	  "\\*TeX Help\\*"
@@ -410,6 +449,7 @@
 (require 'auctex-custom)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
+(require 'citar-custom)
 (require 'python-custom)
 
 ;; General ess settings

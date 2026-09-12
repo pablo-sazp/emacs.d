@@ -3,7 +3,7 @@
 ;;AucTEX
 (use-package auctex
   :hook
-  ((LaTeX-mode . turn-on-reftex)	;Activate reftex
+  ((LaTeX-mode . turn-on-reftex) ;Activate reftex
    (LaTeX-mode . (lambda ()
 		   (setq-local sentence-end-double-space nil)	;Jump to points with M-e
 		   (variable-pitch-mode)
