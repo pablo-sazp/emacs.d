@@ -431,6 +431,7 @@
 	  occur-mode
 	  "\\*vterm.*\\*"
 	  "\\*Python.*\\*"
+	  "\\*jupyter-repl.*\\*"
 	  "\\*R.*\\*"
 	  "\\*TeX Help\\*"
 	  "\\*lsp-help\\*"

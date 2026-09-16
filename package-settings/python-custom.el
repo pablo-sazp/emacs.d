@@ -8,6 +8,11 @@
   :bind
   ("C-x c" . conda-env-activate))
 
+(setq-default python-indent-offset 4)
+
+;; Jupyter for org buffers and fixing errors on dedicated org buffers
+(use-package jupyter)
+
 ;; Use tree-sitter python mode even in org-src buffers
 (add-hook 'python-mode-hook
           (lambda ()

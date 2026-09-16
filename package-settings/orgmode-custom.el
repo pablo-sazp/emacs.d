@@ -149,7 +149,8 @@
    '((emacs-lisp . t)
      (shell . t)
      (R . t)
-     (python . t))))
+     (python . t)
+     (jupyter . t))))
 
 (add-hook 'org-babel-after-execute-hook (lambda () 
 					  (org-redisplay-inline-images))) ; Redisplay images when executing code
@@ -159,8 +160,8 @@
 (with-eval-after-load 'org
   (dolist (el '(("r" . "src R :session :results output :exports both")
 		("rf" . "src R :session :results graphics file :dir .images/ :file 0.png :exports both")
-		("p" . "src python :session :results output :exports both")
-		("pf" . "src python :session :results graphics file :dir .images/ :file 0.png :exports both")
+		("p" . "src jupyter-python :exports both")
+		("pf" . "src jupyter-python :results graphics file :dir .images/ :file 0.png :exports both")
 		("b" . "src bash :results output :eval query :exports both")))
     (add-to-list 'org-structure-template-alist el)))
 
@@ -173,11 +174,48 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp))
 
+;; lsp-mode completion in src jupyter-python buffers
+(defun org-babel-edit-prep:jupyter-python (babel-info)
+    "Associate the edit buffer with the Jupyter session and start LSP."
+    ;; 1. Inherit the kernel and session from the parent Org buffer properties
+    (when (fboundp 'org-babel-jupyter-prepare-edit-buffer)
+      (org-babel-jupyter-prepare-edit-buffer babel-info))
+    
+    ;; 2. Initialize LSP for this edit buffer
+    (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+    (lsp))
+
+(with-eval-after-load 'jupyter
+  ;; Prevent crashes if the kernel hasn't been started yet
+  (advice-add 'jupyter-completion-at-point :around
+              (lambda (orig-fun &rest args)
+                (ignore-errors (apply orig-fun args))))
+  ;; Prevent kernel hangs when requesting documentation (M-h) or locations
+  (advice-add 'jupyter-completion-at-point :filter-return
+              (lambda (result)
+                (when result
+                  (let ((plist (nthcdr 3 result)))
+                    (plist-put plist :company-doc-buffer nil)
+                    ;;(plist-put plist :company-location nil)
+		    ))
+                result)))
+
 (add-hook 'python-mode-hook
           (lambda ()
             (when (fboundp 'python-ts-mode)
               (python-ts-mode))))
 
+
+;; Pretty ansi color sequences in code block output
+(defun ek/babel-ansi ()
+  (when-let ((beg (org-babel-where-is-src-block-result nil nil)))
+    (save-excursion
+      (goto-char beg)
+      (when (looking-at org-babel-result-regexp)
+        (let ((end (org-babel-result-end))
+              (ansi-color-context-region nil))
+          (ansi-color-apply-on-region beg end))))))
+(add-hook 'org-babel-after-execute-hook 'ek/babel-ansi)
 
 ;; End of file
 (provide 'orgmode-custom)
