@@ -37,10 +37,12 @@
   (lsp-pyright-langserver-command "basedpyright")
   :hook ((python-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp)))
+			  (unless (bound-and-true-p org-src-mode) ; Do not inmediately call on org src buffers
+                            (lsp))))
 	 (python-ts-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp)))))  ; or lsp-deferred
+			  (unless (bound-and-true-p org-src-mode)
+                            (lsp))))))
 
 ;; Disable eldoc when lsp is active
 (add-hook 'python-mode-hook

@@ -168,22 +168,30 @@
 (setq org-babel-default-header-args:R	; This code evaluate for every R src block
       '((:prologue . "options(readxl.show_progress=FALSE)"))) ; No progress bar when importing files, better output format
 
-
-;; This allows lsp-mode completion in src python buffers
+;; lsp-mode completion in src python buffers
 (defun org-babel-edit-prep:python (babel-info)
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp-mode 1)
   (lsp))
 
 ;; lsp-mode completion in src jupyter-python buffers
-(defun org-babel-edit-prep:jupyter-python (babel-info)
-    "Associate the edit buffer with the Jupyter session and start LSP."
-    ;; 1. Inherit the kernel and session from the parent Org buffer properties
-    (when (fboundp 'org-babel-jupyter-prepare-edit-buffer)
-      (org-babel-jupyter-prepare-edit-buffer babel-info))
-    
-    ;; 2. Initialize LSP for this edit buffer
-    (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
-    (lsp))
+(require 'ob-jupyter)
+(defun my/org-babel-edit-prep:jupyter-python (babel-info)
+  "Associate the edit buffer with the Jupyter session and start LSP."
+  
+  ;; Inherit the kernel and session from the parent Org buffer properties
+  ;; (when (fboundp 'org-babel-jupyter-prepare-edit-buffer)
+  ;;   (org-babel-jupyter-prepare-edit-buffer babel-info))
+
+  ;; Prompt for associating with REPL
+  (call-interactively #'jupyter-repl-associate-buffer)
+  
+  ;; 2. Initialize LSP for this edit buffer
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp-mode 1)
+  (lsp))
+
+(advice-add 'org-babel-edit-prep:jupyter-python :override #'my/org-babel-edit-prep:jupyter-python)
 
 (with-eval-after-load 'jupyter
   ;; Prevent crashes if the kernel hasn't been started yet

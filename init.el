@@ -446,13 +446,11 @@
 (add-to-list 'load-path "~/.emacs.d/package-settings/")
 
 (require 'auctex-custom)
+(require 'python-custom)
+(require 'ess-settings)
 (require 'orgmode-custom)
 (require 'orgroam-custom)
 (require 'citar-custom)
-(require 'python-custom)
-
-;; General ess settings
-(require 'ess-settings)
 
 (add-to-list 'display-buffer-alist
 	     `("^\\*R\\(?::.*\\)?\\*$"
