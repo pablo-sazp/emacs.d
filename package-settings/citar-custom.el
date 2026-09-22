@@ -49,7 +49,7 @@
   (LaTeX-mode . citar-capf-setup)
   (org-mode . citar-capf-setup)
   :bind
-  ("C-c M-b" . citar-open)
+  ("C-c C-M-b" . citar-open)
   (:map org-mode-map :package org ("C-c b" . #'org-cite-insert))
   :config
   (my/citar-icon-setup)

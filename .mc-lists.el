@@ -16,6 +16,7 @@
 	sp-backward-sexp
 	sp-backward-up-sexp
 	sp-forward-sexp
+	sp-forward-slurp-sexp
 	sp-up-sexp
 	xref-go-forward
 	))
@@ -25,6 +26,8 @@
 	consult-buffer
 	consult-line
 	cua-copy-handler
+	elisp-eval-region-or-buffer
+	find-file
 	handle-switch-frame
 	ignore
 	lsp-ui-doc--handle-mouse-movement
@@ -34,4 +37,5 @@
 	org-edit-src-save
 	python-shell-send-buffer
 	reposition-window
+	sp-remove-active-pair-overlay
 	))

@@ -11,7 +11,23 @@
 (setq-default python-indent-offset 4)
 
 ;; Jupyter for org buffers and fixing errors on dedicated org buffers
-(use-package jupyter)
+(use-package jupyter
+  :hook
+  (jupyter-repl-mode . (lambda ()
+			 (smartparens-mode)
+			 (setq-local sp-escape-quotes-after-insert nil)))
+  :config
+  (add-to-list 'display-buffer-alist	; Nicer buffer display
+	       '("\\*jupyter-repl.*\\*"
+		 (display-buffer-reuse-window display-buffer-in-side-window)
+		 (side . right)
+		 (window-width . 0.47)
+		 (reusable-frames . nil)))
+  (add-to-list 'display-buffer-alist
+	       '("\\*jupyter-\\(traceback\\|output\\).*\\*"
+		 (display-buffer-reuse-window display-buffer-below-selected)
+		 (window-height . 0.4)
+		 (reusable-frames . nil))))
 
 ;; Use tree-sitter python mode even in org-src buffers
 (add-hook 'python-mode-hook

@@ -23,12 +23,13 @@
 
 (setq-default line-spacing 2)
 
-(add-to-list 'default-frame-alist
-             '(font . "Hack-11"))
-(set-face-attribute 'default nil :font "Hack" :height 114)
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 118 :weight 'regular)
+(defun my/apply-custom-fonts ()
+  (add-to-list 'default-frame-alist
+               '(font . "IBM Plex Mono-11"))
+  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 110 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :font "IBM Plex Mono" :height 110 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height 116 :weight 'regular))
 
-(use-package doom-themes)
 (defun set-emacs-frames (variant)
   (dolist (frame (frame-list))
     (let* ((window-id (frame-parameter frame 'outer-window-id))
@@ -37,19 +38,13 @@
 			id variant)))
       (call-process-shell-command cmd))))
 
-(defun set-emacs-theme-light ()
-  (interactive)
-  (load-theme 'ef-arbutus t)
-  (set-emacs-frames "light"))
+(use-package doom-themes
+  :config
+  (load-theme 'doom-material-dark)
+  (if (window-system)
+      (set-emacs-frames "dark"))
+  (my/apply-custom-fonts))
 
-(defun set-emacs-theme-dark ()
-  (interactive)
-  (load-theme 'doom-material-dark t)
-  ;;(load-file "~/.emacs.d/themes/material-darker-custom.el")
-  (set-emacs-frames "dark"))
-
-(if (window-system)
-    (set-emacs-theme-dark))
 
 (defvar display-buffer-alist nil)	; Initializes the variable so that I can add to it later
 
@@ -299,6 +294,7 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 (setq ring-bell-function 'ignore)
+(setq tab-bar-show t)
 
 (setq mouse-wheel-progressive-speed nil) ;Mouse speed settings
 (setq mouse-wheel-scroll-amount '(2))
@@ -464,7 +460,7 @@
                '("^\\*Help\\*$"
                  (display-buffer-reuse-window display-buffer-in-side-window)
                  (side . right)
-                 (slot . 1)             ; Slot 1 keeps it separate from Slot 0 (your active *Help*)
+                 ;;(slot . 1)             ; Slot 1 keeps it separate from Slot 0 (your active *Help*)
                  (window-width . 0.45)
                  (inhibit-same-window . t))))
 
