@@ -5,9 +5,10 @@
   :custom
   (ess-ask-for-ess-directory nil)
   (inferior-R-args "--no-save")
+  (ess-indent-with-fancy-comments nil)	; Do not indent # comments
   :config
   (setq ess-set-style 'RStudio)
-  (global-set-key (kbd "S-<f12>") 'ess-switch-to-inferior-or-script-buffer)
+  (global-set-key (kbd "<f12>") 'ess-switch-to-inferior-or-script-buffer)
   (setq ess-R-font-lock-keywords
 	(quote
 	 ((ess-R-fl-keyword:modifiers . t)
@@ -44,5 +45,15 @@
           (ess-fl-keyword:=)
           (ess-fl-keyword::= . t)
           (ess-R-fl-keyword:F&T)))))
+
+(use-package ess-view-data
+  :bind (:map ess-r-mode-map
+	      ("C-c v" . ess-view-data-print))
+  :config
+  (add-to-list 'display-buffer-alist	; Nicer buffer display
+	       '("\\*R Data View.*\\*"
+		 (display-buffer-reuse-window display-buffer-pop-up-window)
+		 (reusable-frames . nil)))
+  )
 
 (provide 'ess-settings)

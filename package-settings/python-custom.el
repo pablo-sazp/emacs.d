@@ -24,7 +24,7 @@
 		 (window-width . 0.47)
 		 (reusable-frames . nil)))
   (add-to-list 'display-buffer-alist
-	       '("\\*jupyter-\\(traceback\\|output\\).*\\*"
+	       '("\\*jupyter-\\(traceback\\|output\\|error\\).*\\*"
 		 (display-buffer-reuse-window display-buffer-below-selected)
 		 (window-height . 0.4)
 		 (reusable-frames . nil))))

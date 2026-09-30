@@ -203,7 +203,9 @@
   (lsp-enable-which-key-integration t)
   (setq lsp-eldoc-enable-hover nil)	       ; Disable description in echo area
   (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil))
+  (setq lsp-signature-render-documentation nil)
+  :custom
+  (lsp-enable-on-type-formatting nil))
 
 (defun my/lsp-enable-other-completions ()
   "Allow company-files (and other backends) to run alongside company-capf in LSP buffers."

@@ -12,9 +12,9 @@
 	 (headline           `(:inherit variable-pitch :weight bold)))
     (custom-theme-set-faces
      'user
-     `(org-level-3 ((t (,@headline :height 1.05))))
-     `(org-level-2 ((t (,@headline :height 1.1))))
-     `(org-level-1 ((t (,@headline :height 1.25))))
+     `(org-level-3 ((t (,@headline :height 1.05 :line-spacing 0.3))))
+     `(org-level-2 ((t (,@headline :height 1.1 :line-spacing 0.3))))
+     `(org-level-1 ((t (,@headline :height 1.25 :line-spacing 0.3))))
      `(org-document-title ((t (,@headline  :height 1.3 :underline nil))))))
   (set-face-attribute 'org-table nil :inherit 'fixed-pitch) ;Small settings for tables, blocks, etc.
   ;;(set-face-attribute 'org-block nil :inherit 'default :family "Hack")
@@ -44,8 +44,11 @@
   (setq org-blank-before-new-entry ; Always insert blank line before headings
       '((heading . t)	   
         (plain-list-item . nil)))
-  (setq org-cycle-separator-lines 0)
+  (setq org-cycle-separator-lines 1)
   (setq org-src-window-setup 'current-window)
+  ;; Folding & indentation
+  (setq org-indent-indentation-per-level 4)
+  (setq org-startup-folded 'show2levels)
   )
 
 
@@ -55,7 +58,8 @@
 	 (org-agenda-finalize-hook . org-modern-agenda))
   :custom
   (org-modern-star 'replace)
-  (org-modern-block-fringe nil))
+  (org-modern-block-fringe nil)
+  (org-modern-list '((43 . "◦") (45 . "•") (42 . "•"))))
 
 (use-package org-appear			; Show emphasis markers when hidden
   :hook
@@ -161,14 +165,21 @@
   (dolist (el '(("r" . "src R :session :results output :exports both")
 		("rf" . "src R :session :results graphics file :dir .images/ :file 0.png :exports both")
 		("p" . "src jupyter-python :exports both")
-		("pf" . "src jupyter-python :results graphics file :dir .images/ :file 0.png :exports both")
+		("pf" . "src python :results graphics file :dir .images/ :file 0.png :exports both")
 		("b" . "src bash :results output :eval query :exports both")))
     (add-to-list 'org-structure-template-alist el)))
 
 (setq org-babel-default-header-args:R	; This code evaluate for every R src block
       '((:prologue . "options(readxl.show_progress=FALSE)"))) ; No progress bar when importing files, better output format
 
-;; lsp-mode completion in src python buffers
+
+;; lsp completion in src R buffers
+(defun org-babel-edit-prep:R (babel-info)
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp-mode 1)
+  (lsp))
+
+;; lsp completion in src python buffers
 (defun org-babel-edit-prep:python (babel-info)
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp-mode 1)

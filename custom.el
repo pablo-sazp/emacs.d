@@ -20,14 +20,14 @@
  '(package-selected-packages
    '(ace-window anaphora auctex base16-theme buffer-move casual company
 		company-box conda deferred doom-modeline doom-themes
-		embark-consult ess ess-r-mode expand-region
-		git-timemachine gptel jupyter lsp-pyright lsp-ui magit
-		marginalia multiple-cursors nerd-icons-completion
-		nerd-icons-dired orderless org-appear org-bullets
-		org-download org-fragtog org-modern org-roam polymode
-		popper projectile request simple-httpd smartparens
-		treesit-auto vertico visual-fill-column vterm vundo
-		websocket wgrep zmq))
+		embark-consult ess ess-r-mode ess-view-data
+		expand-region git-timemachine gptel jupyter
+		lsp-pyright lsp-ui magit marginalia multiple-cursors
+		nerd-icons-completion nerd-icons-dired orderless
+		org-appear org-bullets org-download org-fragtog
+		org-modern org-roam polymode popper projectile request
+		simple-httpd smartparens treesit-auto vertico
+		visual-fill-column vterm vundo websocket wgrep zmq))
  '(safe-local-variable-values
    '((TeX-engine . xelatex) (conda-env-current . "bacillus-genomics")))
  '(tool-bar-mode nil))
@@ -39,6 +39,6 @@
  '(org-block ((t (:inherit fixed-pitch))))
  '(org-code ((t (:inherit (shadow fixed-pitch)))))
  '(org-document-title ((t (:inherit variable-pitch :weight bold :height 1.3 :underline nil))))
- '(org-level-1 ((t (:inherit variable-pitch :weight bold :height 1.25))))
- '(org-level-2 ((t (:inherit variable-pitch :weight bold :height 1.1))))
- '(org-level-3 ((t (:inherit variable-pitch :weight bold :height 1.05)))))
+ '(org-level-1 ((t (:inherit variable-pitch :weight bold :height 1.25 :line-spacing 0.3))))
+ '(org-level-2 ((t (:inherit variable-pitch :weight bold :height 1.1 :line-spacing 0.3))))
+ '(org-level-3 ((t (:inherit variable-pitch :weight bold :height 1.05 :line-spacing 0.3)))))
