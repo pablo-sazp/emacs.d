@@ -10,8 +10,9 @@
 
 (setq-default python-indent-offset 4)
 
-;; Jupyter for org buffers and fixing errors on dedicated org buffers
+;; Jupyter for org buffers and standalone python scripts
 (use-package jupyter
+  :after python
   :hook
   (jupyter-repl-mode . (lambda ()
 			 (smartparens-mode)
@@ -27,7 +28,13 @@
 	       '("\\*jupyter-\\(traceback\\|output\\|error\\).*\\*"
 		 (display-buffer-reuse-window display-buffer-below-selected)
 		 (window-height . 0.4)
-		 (reusable-frames . nil))))
+		 (reusable-frames . nil)))
+  :bind
+  ;; Bind existing jupyter repls to standalone python scripts
+  (:map python-ts-mode-map
+	("C-c j" . #'jupyter-repl-associate-buffer)
+	("C-c J" . #'jupyter-connect-repl))
+  )
 
 ;; Use tree-sitter python mode even in org-src buffers
 (add-hook 'python-mode-hook
@@ -61,10 +68,10 @@
                             (lsp))))))
 
 ;; Disable eldoc when lsp is active
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq-local eldoc-documentation-functions
-                        (list #'lsp-eldoc-function))))
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (setq-local eldoc-documentation-functions
+;;                         (list #'lsp-eldoc-function))))
 
 ;; Buffer position
 (add-to-list 'display-buffer-alist

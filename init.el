@@ -201,7 +201,7 @@
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (lsp-enable-which-key-integration t)
-  (setq lsp-eldoc-enable-hover nil)	       ; Disable description in echo area
+  (setq lsp-eldoc-enable-hover t)	       ; Disable description in echo area
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil)
   :custom
@@ -328,7 +328,11 @@
    ("M-L" . sp-backward-up-sexp)
    ("C-M-d" . sp-down-sexp)
    ("C-M-f" . sp-forward-sexp)		; Movement across sexps
-   ("C-M-b" . sp-backward-sexp)))
+   ("C-M-b" . sp-backward-sexp)
+   ;; Slurp and barf 
+   ("C-M-8" . sp-forward-slurp-sexp)
+   ("C-M-9" . sp-forward-barf-sexp)
+   ))
 
 ;; Indent highlighting
 (use-package indent-bars
@@ -352,9 +356,9 @@
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
-  (treesit-auto-langs '(python bash))
+  (treesit-auto-langs '(python bash yaml))
   :config
-  (treesit-auto-add-to-auto-mode-alist '(python bash))
+  (treesit-auto-add-to-auto-mode-alist '(python bash yaml))
   (global-treesit-auto-mode))
 
 ;; Multiple cursors

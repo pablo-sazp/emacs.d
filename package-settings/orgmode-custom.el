@@ -163,6 +163,7 @@
 
 (with-eval-after-load 'org
   (dolist (el '(("r" . "src R :session :results output :exports both")
+		("rj" . "src jupyter-R :kernel r_kernel :session rsession :exports both")
 		("rf" . "src R :session :results graphics file :dir .images/ :file 0.png :exports both")
 		("p" . "src jupyter-python :exports both")
 		("pf" . "src python :results graphics file :dir .images/ :file 0.png :exports both")
@@ -178,6 +179,16 @@
   (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
   (lsp-mode 1)
   (lsp))
+
+(defun my/org-babel-edit-prep:jupyter-R (babel-info)
+  ;; Prompt for associating with REPL
+  (call-interactively #'jupyter-repl-associate-buffer)
+  
+  (setq-local buffer-file-name (->> babel-info caddr (alist-get :tangle)))
+  (lsp-mode 1)
+  (lsp))
+
+(advice-add 'org-babel-edit-prep:jupyter-R :override #'my/org-babel-edit-prep:jupyter-R)
 
 ;; lsp completion in src python buffers
 (defun org-babel-edit-prep:python (babel-info)

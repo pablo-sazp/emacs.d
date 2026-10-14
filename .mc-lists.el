@@ -7,11 +7,13 @@
 	comment-dwim
 	cua-paste
 	end-of-buffer
+	ess-smart-comma
 	ignore-preserving-kill-region
 	indent-for-tab-command
 	org-beginning-of-line
 	org-end-of-line
 	org-self-insert-command
+	org-shiftleft
 	query-replace
 	sp-backward-sexp
 	sp-backward-up-sexp
