@@ -5,7 +5,7 @@
 (defun efs/org-mode-setup ()
   (variable-pitch-mode 1)
   (visual-line-mode 1)
-  (setq-local line-spacing 3))
+  (setq-local line-spacing 0.2))
 
 (defun custom/org-mode-custom-fonts () ; Fancy text display customization
   (let* ((base-font-color     (face-foreground 'default nil 'default)) ; Fancy text display for headings
@@ -110,7 +110,9 @@
 	   (file "~/Vault/02-Agenda/emacs-todo.org")
 	   "* %?")
 	  ("p" "Project note" entry
-	   (file+olp (expand-file-name (concat (projectile-project-name) ".org") "~/Vault/03-Projects/") "Ideas")
+	   (file+olp
+	    (lambda () 
+	      (expand-file-name (concat "~/Vault/03-Projects/" (projectile-project-name) ".org"))) "Ideas")
 	   "** TODO %?"))))
 
 (global-set-key (kbd "<f9>") 'org-clock-goto) ; Go to clocked item
@@ -121,12 +123,13 @@
   (file-expand-wildcards "~/Vault/03-Projects/*.org"))
 
 (setq org-refile-targets
-      '((nil :maxlevel . 3)
+      '((nil :maxlevel . 2)))
 	;;(org-agenda-files :maxlevel . 1)
-        (my/org-project-files :maxlevel . 2)))
+        ;;(my/org-project-files :maxlevel . 2)))
 
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
+(setq org-agenda-custom-commands nil)	;Initialize the list
 
 ;; Open the corresponding file by current projectile project
 (use-package projectile
@@ -141,8 +144,22 @@
 	;; If the note doesn't exist, offer to create it
 	(when (y-or-n-p (format "Note '%s.org' doesn't exist. Create it? " project-name))
           (find-file note-file)))))
+  ;; Add project agenda views
+  (add-to-list 'org-agenda-custom-commands
+	       `("p" "Open project file TODO entries" todo "TODO"
+		 ((org-agenda-files
+		   (list (expand-file-name
+			  (concat "~/Vault/03-Projects/" (projectile-project-name) ".org")))))))
   :bind
   ("C-c P" . my/projectile-open-associated-note))
+
+;; New tag levels
+(setq org-todo-keywords
+      '((sequence "TODO" "ONGOING" "DONE")))
+;; (setq org-todo-keyword-faces
+;;       '(("TODO" . org-warning)
+;; 	("ONGOING" . "blue")))
+
 
 ;; --------------- ORG-BABEL -------------
 

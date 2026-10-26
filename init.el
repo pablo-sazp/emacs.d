@@ -201,7 +201,7 @@
   :config
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (lsp-enable-which-key-integration t)
-  (setq lsp-eldoc-enable-hover t)	       ; Disable description in echo area
+  (setq lsp-eldoc-enable-hover t)
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil)
   :custom

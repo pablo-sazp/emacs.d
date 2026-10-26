@@ -5,6 +5,7 @@
       '(
 	LaTeX-insert-left-brace
 	comment-dwim
+	cua-copy-region
 	cua-paste
 	end-of-buffer
 	ess-smart-comma
