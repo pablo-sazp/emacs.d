@@ -361,6 +361,20 @@
   (treesit-auto-add-to-auto-mode-alist '(python bash yaml))
   (global-treesit-auto-mode))
 
+;; Treesit fold, for folding code
+(use-package treesit-fold
+  :load-path "git-packages/treesit-fold"
+  :hook (treesit-auto-mode-hook . treesit-fold-mode)
+  :bind
+  (:map python-ts-mode-map
+	("C-c f" . treesit-fold-toggle)
+	("<f5>" . treesit-fold-close-all)
+	("S-<f5>" . treesit-fold-open-all))
+  :custom
+  (treesit-fold-line-count-show t)
+  (treesit-fold-line-count-format " <%d lines> "))
+
+
 ;; Multiple cursors
 (use-package multiple-cursors
   :bind
@@ -408,14 +422,27 @@
 ;; Buffer navigation
 (use-package ace-window					; Switch windows
   :bind
-  (("C-x C-o" . ace-window)))
+  ("C-x o" . ace-window)
+  ("M-o" . other-window))
+
+(use-package windmove
+  :ensure nil
+  :bind*
+  (("M-<left>"  . windmove-left)
+   ("M-<right>" . windmove-right)
+   ("M-<up>"    . windmove-up)
+   ("M-<down>"  . windmove-down))
+  :config
+  (setq windmove-wrap-around t))
 
 (use-package buffer-move
   :bind
   (("C-<left>" . buf-move-left)
    ("C-<right>" . buf-move-right)
    ("C-<up>" . buf-move-up)
-   ("C-<down>" . buf-move-down)))
+   ("C-<down>" . buf-move-down))
+  :custom
+  (buffer-move-stay-after-swap t))
 
 (use-package popper
   :bind (("C-+"   . popper-toggle)

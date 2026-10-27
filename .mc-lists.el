@@ -8,6 +8,9 @@
 	cua-copy-region
 	cua-paste
 	end-of-buffer
+	ess-goto-end-of-function-or-para
+	ess-roxy-goto-end-of-roxy-comment
+	ess-roxy-newline
 	ess-smart-comma
 	ignore-preserving-kill-region
 	indent-for-tab-command

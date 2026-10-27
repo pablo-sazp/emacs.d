@@ -1,3 +1,6 @@
 [submodule "ess-plot"]
 	path = git-packages/ess-plot
 	url = https://github.com/DennieTeMolder/ess-plot.git
+[submodule "git-packages/treesit-fold"]
+	path = git-packages/treesit-fold
+	url = https://github.com/emacs-tree-sitter/treesit-fold
