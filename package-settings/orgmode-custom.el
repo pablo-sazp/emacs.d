@@ -49,6 +49,14 @@
   ;; Folding & indentation
   (setq org-indent-indentation-per-level 4)
   (setq org-startup-folded 'show2levels)
+  :bind
+  (:map org-mode-map
+	;; Rebinding heading moving because of windmove on M
+	("C-S-<left>" . org-metaleft)
+	("C-S-<right>" . org-metaright)
+	("C-S-<up>" . org-move-subtree-up)
+	("C-S-<down>" . org-move-subtree-down)
+	)
   )
 
 

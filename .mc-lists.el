@@ -6,18 +6,24 @@
 	LaTeX-insert-left-brace
 	comment-dwim
 	cua-copy-region
+	cua-cut-handler
+	cua-exchange-point-and-mark
 	cua-paste
 	end-of-buffer
 	ess-goto-end-of-function-or-para
+	ess-indent-or-complete
 	ess-roxy-goto-end-of-roxy-comment
+	ess-roxy-move-beginning-of-line
 	ess-roxy-newline
 	ess-smart-comma
 	ignore-preserving-kill-region
 	indent-for-tab-command
+	insert-char
 	org-beginning-of-line
 	org-end-of-line
 	org-self-insert-command
 	org-shiftleft
+	org-shiftright
 	query-replace
 	sp-backward-sexp
 	sp-backward-up-sexp
@@ -32,16 +38,22 @@
 	consult-buffer
 	consult-line
 	cua-copy-handler
+	cua-cut-region
 	elisp-eval-region-or-buffer
+	ess-eval-region-or-function-or-paragraph-and-step
 	find-file
 	handle-switch-frame
+	help-for-help
 	ignore
 	lsp-ui-doc--handle-mouse-movement
 	mouse-set-region
 	occur
 	org-ctrl-c-ctrl-c
 	org-edit-src-save
+	popper-toggle
 	python-shell-send-buffer
 	reposition-window
+	save-buffers-kill-terminal
 	sp-remove-active-pair-overlay
+	undo-redo
 	))

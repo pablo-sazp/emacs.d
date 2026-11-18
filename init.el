@@ -72,7 +72,9 @@
   ("C-M-s" . isearch-forward)
   ("M-g i" . consult-imenu)
   ("C-x b" . consult-buffer)
-  ("C-M-v" . consult-yank-from-kill-ring))
+  ("C-M-v" . consult-yank-from-kill-ring)
+  :custom
+  (consult-buffer-list-function 'consult--frame-buffer-list)) ; Buffers only from the current tab
 
 (use-package embark
   :bind
@@ -312,6 +314,7 @@
 ;; Line numbers and other programing features
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook #'display-line-numbers-mode) ; Enable line numbers only in programming modes
+(setq-default word-wrap t)
 (setq display-line-numbers-width-start +1)
 
 (use-package smartparens
@@ -462,6 +465,7 @@
 	  "\\*Python.*\\*"
 	  "\\*jupyter-repl.*\\*"
 	  "\\*R.*\\*"
+	  ess-r-help-mode
 	  "\\*TeX Help\\*"
 	  "\\*lsp-help\\*"
 	  "\\*eshell\\*"))

@@ -1,3 +1,8 @@
+;; Specific python-mode mappìngs
+(with-eval-after-load 'python
+  (keymap-set python-ts-mode-map "C-S-<left>" #'python-indent-shift-left)
+  (keymap-set python-ts-mode-map "C-S-<right>" #'python-indent-shift-right))
+
 ;; Conda config
 (use-package conda
   :config
